@@ -19,7 +19,7 @@ namespace Building
             
             if (BaseResourse != null)
             {
-                LogicContact?.StartCoroutine(LogicContact.GetResourceInventoryToCreateProduct(this, Inventory, EndMovePositionResource));
+                //LogicContact?.StartCoroutine(LogicContact.GetResourceInventoryToCreateProduct(this, Inventory, EndMovePositionResource));
             }
         }
 

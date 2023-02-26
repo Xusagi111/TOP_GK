@@ -13,8 +13,8 @@ namespace Building
         {
             int ShortageLog = 0;
             int ShortageBoard = 0;
-            List<Log> LogInv = new List<Log>();
-            List<Board> BoardInv = new List<Board>();
+            List<BaseResource> LogInv = new List<BaseResource>();
+            List<BaseResource> BoardInv = new List<BaseResource>();
 
             if (baseWarehouse.LogResource != null)
             {
@@ -33,20 +33,21 @@ namespace Building
                 else if(ShortageBoard != 0 && Data is Board board) BoardInv.Add(board);
             }
 
-            for (int i = 0; i < LogInv.Count; i++)
-            {
-                yield return MoveAnimationObj(LogInv, baseWarehouse.LogResource, EndMovePosition, Inventory);
-            }
-            for (int i = 0; i < BoardInv.Count; i++)
-            {
-                yield return MoveAnimationObj(BoardInv, baseWarehouse.BoardResource, EndMovePosition, Inventory);
-            }
+            //for (int i = 0; i < LogInv.Count; i++)
+            //{
+            //    yield return MoveAnimationObj(LogInv, baseWarehouse.LogResource , EndMovePosition, Inventory);
+            //}
+            //for (int i = 0; i < BoardInv.Count; i++)
+            //{
+            //    yield return MoveAnimationObj(BoardInv, baseWarehouse.BoardResource, EndMovePosition, Inventory);
+            //}
+            yield return null;
         }
 
-        public IEnumerator GetResourceInventoryToCreateProduct<T>(ResourceWarhouse<T> AddResourse, List<BaseResource> Inventory, Transform EndMovePosition) where T : BaseResource
+        public IEnumerator GetResourceInventoryToCreateProduct<T>(ResourceWarhouse<BaseResource> AddResourse, List<BaseResource> Inventory, Transform EndMovePosition) where T : BaseResource
         {
             List<BaseResource> AllResource = new List<BaseResource>();
-
+           
             if (AddResourse.CountElement < AddResourse.MaxElement + 1)
             {
                 foreach (var item in Inventory)
@@ -64,7 +65,27 @@ namespace Building
             }
         }
 
-        public float MoveAnimationObj<T>(List<T> Resourse, ResourceWarhouse<T> EndINventory, Transform EndPosition, List<T> Inventory) where T : BaseResource
+
+        public float MoveAnimationObj<T>(List<T> Resourse, ResourceWarhouse<BaseResource> EndINventory, Transform EndPosition, List<T> Inventory) where T : BaseResource
+        {
+            if (EndINventory == null)
+            {
+                Debug.LogError("Inventory Null");
+                return 0;
+            }
+            if (EndINventory.MaxElement < EndINventory.CountElement + 1)
+            {
+                return 0;
+            }
+
+            Resourse[0].transform.position = EndPosition.position;
+            EndINventory.CountElement++;
+            Inventory.Remove(Resourse[0]);
+            Resourse.RemoveAt(0);
+            return Global.s_TimeMoveResourse;
+        }
+
+        public float MoveAnimationObj<T>(List<T> Resourse, ResourceWarhouse<T> EndINventory, Transform EndPosition, List<T> Inventory) where T : Component
         {
             if (EndINventory == null)
             {
