@@ -1,5 +1,5 @@
-﻿using Resourse;
-using System.Collections.Generic;
+﻿using Assets.Script.Player;
+using Resourse;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,14 +12,22 @@ namespace Building
 
         public void AddResource(GameObject CheckingInventory)
         {
-            //TODO Осуществить проверку на инвентарь с ресурсами, если это не будет сделанно, то он не пройдёт дальше.
-            var BaseResourse = CheckingInventory.GetComponent<BaseResource>();
-            List<BaseResource> Inventory = new List<BaseResource>();
-            Inventory.Add(BaseResourse); 
-            
-            if (BaseResourse != null)
+            var PLayerInventory = CheckingInventory.GetComponent<TestPlayerInventory>();
+            if (PLayerInventory == null)
             {
-                //LogicContact?.StartCoroutine(LogicContact.GetResourceInventoryToCreateProduct(this, Inventory, EndMovePositionResource));
+                Debug.LogError("Ошибка у игрока не найден инвентарь");
+                return;
+            }
+
+            var Inventory = PLayerInventory.AllResoursePlayer;
+
+            if (Inventory != null)
+            {
+                if (LogResource != null && LogicContact != null) LogicContact.StartCoroutine(
+                    LogicContact.GetResourceInventoryToCreateProduct<Log>(LogResource, Inventory, EndMovePositionResource));
+
+                if (BoardResource != null && LogicContact != null) LogicContact.StartCoroutine(
+                    LogicContact.GetResourceInventoryToCreateProduct<Board>(BoardResource, Inventory, EndMovePositionResource));
             }
         }
 
