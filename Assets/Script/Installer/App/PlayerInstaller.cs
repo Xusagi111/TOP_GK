@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
 [CreateAssetMenu(fileName = "PlayerInstaller", menuName = "SOInstaller/PlayerInstaller")]
@@ -28,7 +29,7 @@ public class PlayerInstaller : ScriptableObjectInstaller<PlayerInstaller>
     public void BindPlayerPresenter()
     {
         Container.
-            Bind(typeof(ITickable), typeof(IInitializable), typeof(IPlayerPresenter)).
+            Bind(typeof(ITickable), typeof(IInitializable), typeof(IDisposable),typeof(IPlayerPresenter)).
             To<PlayerPresenter>().AsSingle();
     }
 }

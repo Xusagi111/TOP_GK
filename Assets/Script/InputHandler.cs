@@ -9,9 +9,9 @@ public class InputHandler : MonoBehaviour
     public float JoystickVertical => joystick.Vertical;
     public Vector3 Direction => joystick.Direction;
 
-    public ReactiveProperty<bool> IsRightClickMouseProp = new ReactiveProperty<bool>(false);
-    public ReactiveProperty<bool> IsLeftClickMouseProp = new ReactiveProperty<bool>(false);
-    public ReactiveProperty<bool> IsTapProp = new ReactiveProperty<bool>(false);
+    public readonly BoolReactiveProperty IsRightClickMouseProp = new BoolReactiveProperty(false);
+    public readonly BoolReactiveProperty IsLeftClickMouseProp = new BoolReactiveProperty(false);
+    public readonly BoolReactiveProperty IsTapProp = new BoolReactiveProperty(false);
 
     private void Update()
     {

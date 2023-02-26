@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 5871686486340243200}
   - component: {fileID: 7907035617969196821}
   - component: {fileID: 4268274690197451668}
+  - component: {fileID: 3575602389073430880}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -293,6 +294,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 5871686486340243200}
   chController: {fileID: 4268274690197451668}
+  triggersNames:
+  - Enemy
+  - Buildings
+  _myTrigger: {fileID: 3575602389073430880}
 --- !u!143 &4268274690197451668
 CharacterController:
   m_ObjectHideFlags: 0
@@ -304,13 +309,27 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 1.75
+  m_Radius: 0.29
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.89, z: 0}
+--- !u!136 &3575602389073430880
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925375133378940864}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5314889
+  m_Height: 1.7302623
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.95335937, z: 0.031488895}
 --- !u!1 &1160484389325695834
 GameObject:
   m_ObjectHideFlags: 0
