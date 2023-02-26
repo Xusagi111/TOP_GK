@@ -3,9 +3,8 @@ using UnityEngine;
 
 namespace Building
 {
-    public class Creatorlog : Creator
+    public class Creatorlog : BaseWarehouse
     {
-        public WarehouseCreateResourse<Log, Board> WarehouseResourse;
         public float TimeCreateOneProduct;
         public float TimeCreateEndProduct;
         public bool isCreateProduct { get; set; } = false;
@@ -33,6 +32,12 @@ namespace Building
         {
             WarehouseResourse.InputResources.Remove(log);
             WarehouseResourse.ExitingResourse.Add(Create<Log, Board>(log));
+        }
+
+        public E Create<T, E>(T GetResourse) where E : Component
+        {
+            var CreateObj = new GameObject();
+            return CreateObj.AddComponent<E>();
         }
     }
 }

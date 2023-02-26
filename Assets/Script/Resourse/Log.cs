@@ -1,7 +1,7 @@
 ﻿namespace Resourse
 {
     
-    public class Log : BaseResourse
+    public class Log : BaseResource
     {
 
     }

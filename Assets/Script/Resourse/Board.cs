@@ -1,6 +1,6 @@
 ﻿namespace Resourse
 {
-    public class Board : BaseResourse
+    public class Board : BaseResource
     {
 
     }

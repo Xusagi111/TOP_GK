@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Resourse
 {
-    public class BaseResourse : MonoBehaviour
+    public class BaseResource : MonoBehaviour
     {
         public Image Icon;
     }

@@ -18,6 +18,8 @@ namespace Building
             //Добавление одного типа ресура для постройки. 
             WarHouse.Init(NewHouse.transform, new ResourceWarhouse<Log>() { MaxElement = 10 });
             NewHouse.ConstructionBulding.EventToContact.AddListener(WarHouse.AddResource);
+            WarHouse.EventFullingResource.AddListener(NewHouse.EndCreatingIcomeHouse);
+
         }
     }
 }

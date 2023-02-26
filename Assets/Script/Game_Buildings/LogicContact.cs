@@ -9,7 +9,7 @@ namespace Building
 
     public class LogicContact : MonoBehaviour
     {
-        public IEnumerator GetResource(BaseWarehouse baseWarehouse, List<BaseResourse> Inventory, Transform EndMovePosition)
+        public IEnumerator GetResourceInventoryToConstructHouse(BaseWarehouse baseWarehouse, List<BaseResource> Inventory, Transform EndMovePosition)
         {
             int ShortageLog = 0;
             int ShortageBoard = 0;
@@ -43,7 +43,28 @@ namespace Building
             }
         }
 
-        public float MoveAnimationObj<T>(List<T> Resourse, ResourceWarhouse<T> EndINventory, Transform EndPosition, List<BaseResourse> Inventory) where T : BaseResourse
+        public IEnumerator GetResourceInventoryToCreateProduct<T>(ResourceWarhouse<T> AddResourse, List<BaseResource> Inventory, Transform EndMovePosition) where T : BaseResource
+        {
+            List<BaseResource> AllResource = new List<BaseResource>();
+
+            if (AddResourse.CountElement < AddResourse.MaxElement + 1)
+            {
+                foreach (var item in Inventory)
+                {
+                    if (item is T)
+                    {
+                       AllResource.Add(item);
+                    }
+                }
+            }
+
+            for (int i = 0; i < AllResource.Count; i++)
+            {
+               yield return MoveAnimationObj<BaseResource>(AllResource, AddResourse, EndMovePosition, Inventory);
+            }
+        }
+
+        public float MoveAnimationObj<T>(List<T> Resourse, ResourceWarhouse<T> EndINventory, Transform EndPosition, List<T> Inventory) where T : BaseResource
         {
             if (EndINventory == null)
             {

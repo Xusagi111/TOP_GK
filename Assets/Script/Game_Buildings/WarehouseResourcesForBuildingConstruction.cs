@@ -1,37 +1,40 @@
 ﻿using Resourse;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Building
 {
     public class WarehouseResourcesForBuildingConstruction : BaseWarehouse
     {
-        private LogicContact _logicContact;
-        private Transform _endMovePositionResource;
-        private bool _isinit { get; set; } = false;
-
-        public void Init(Transform EndMovePositionResource, ResourceWarhouse<Log> LogRes = null, ResourceWarhouse<Board> BoardRes = null)
-        {
-            if (_isinit == true) return;
-            LogResource = LogRes;
-            BoardResource = BoardRes;
-            _logicContact = this.gameObject.AddComponent<LogicContact>();
-            _endMovePositionResource = EndMovePositionResource;
-        }
+        [field: SerializeField] public UnityEvent EventFullingResource { get; set; } = new UnityEvent();
+        private bool _isFullingRes { get; set; } = false;
 
         public void AddResource(GameObject CheckingInventory)
         {
             //TODO Осуществить проверку на инвентарь с ресурсами, если это не будет сделанно, то он не пройдёт дальше.
-            var BaseResourse = CheckingInventory.GetComponent<BaseResourse>();
-            List<BaseResourse> Inventory = new List<BaseResourse>();
+            var BaseResourse = CheckingInventory.GetComponent<BaseResource>();
+            List<BaseResource> Inventory = new List<BaseResource>();
             Inventory.Add(BaseResourse); 
             
             if (BaseResourse != null)
             {
-                _logicContact?.StartCoroutine(_logicContact.GetResource(this, Inventory, _endMovePositionResource));
+                LogicContact?.StartCoroutine(LogicContact.GetResourceInventoryToCreateProduct(this, Inventory, EndMovePositionResource));
             }
         }
 
+        private void FixedUpdate()
+        {
+            if (_isFullingRes == false && 
+                LogResource?.CountElement == LogResource?.MaxElement && 
+                BoardResource?.CountElement == BoardResource?.MaxElement)
+            {
+                _isFullingRes = true;
+                EventFullingResource?.Invoke();
+            }
+        }
+
+        private void OnDestroy() => EventFullingResource.RemoveAllListeners();
     }
 
 
