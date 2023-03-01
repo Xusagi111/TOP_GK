@@ -1,8 +1,11 @@
+using Assets.Script.Resourse;
+using Resource;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Building
 {
-    //Хранилище пребафов зданий
+    //Хранилище пребафов
     public class Buildings : MonoBehaviour
     {
         public static Buildings instance;
@@ -11,6 +14,9 @@ namespace Building
         public DataBulding House2;
         public DataBulding House3;
 
+        public MoneyObj MoneyPrefab;
+
+        public List<BaseResource> AllInstanceResource;
 
         private void Awake()
         {

@@ -1,5 +1,6 @@
 ﻿using Assets.Script.Player;
-using Resourse;
+using Resource;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,7 +43,11 @@ namespace Building
             }
         }
 
-        private void OnDestroy() => EventFullingResource.RemoveAllListeners();
+        private void OnDestroy()
+        {
+            EventFullingResource.RemoveAllListeners();
+            Destroy(LogicContact);
+        }
     }
 
 
@@ -51,5 +56,6 @@ namespace Building
     {
         public int CountElement;
         public int MaxElement;
+        public List<T> AllGameObj;
     }
 }

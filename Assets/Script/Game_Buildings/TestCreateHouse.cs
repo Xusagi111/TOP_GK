@@ -1,5 +1,5 @@
 ﻿using Assets.Script.Player;
-using Resourse;
+using Resource;
 using UnityEngine;
 
 namespace Building
@@ -18,11 +18,11 @@ namespace Building
             var NewHouse = Instantiate(House1, _onePointCreateBuilding.position, Quaternion.identity);
             NewHouse.Init();
             //Прокидывание взаимодействия 
-            var WarHouse = NewHouse.gameObject.AddComponent<WarehouseResourcesForBuildingConstruction>();
+            var WarHouse = NewHouse.WarhouseConstruct;
             //Добавление одного типа ресура для постройки. 
             WarHouse.Init(NewHouse.transform, new ResourceWarhouse<Log>() { MaxElement = 10 });
             NewHouse.ConstructionBulding.EventToContact.AddListener(WarHouse.AddResource);
-            WarHouse.EventFullingResource.AddListener(NewHouse.EndCreatingIcomeHouse);
+            WarHouse.EventFullingResource.AddListener(NewHouse.EndCreatingFactory);
         }
 
         private void CreatePlayer()
@@ -33,7 +33,7 @@ namespace Building
             TestPlayer.AddComponent<Rigidbody>();
             var InvenoryPlayer = TestPlayer.AddComponent<TestPlayerInventory>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 GameObject NewGameOj = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 NewGameOj.transform.position = new Vector3(15, 0.5f);

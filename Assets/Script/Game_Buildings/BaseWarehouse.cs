@@ -1,4 +1,4 @@
-﻿using Resourse;
+﻿using Resource;
 using UnityEngine;
 
 namespace Building
@@ -8,8 +8,8 @@ namespace Building
         [field: SerializeField] public ResourceWarhouse<Log> LogResource { get; protected set; }
         [field: SerializeField] public ResourceWarhouse<Board> BoardResource { get; protected set; }
 
-        protected LogicContact LogicContact;
-        protected Transform EndMovePositionResource;
+        public LogicContact LogicContact;
+        public Transform EndMovePositionResource;
         private bool _isinit { get; set; } = false;
 
         public void Init(Transform EndMovePositionResource, ResourceWarhouse<Log> LogRes = null, ResourceWarhouse<Board> BoardRes = null)

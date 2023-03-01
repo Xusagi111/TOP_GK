@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Resourse
+namespace Resource
 {
     public class BaseResource : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-﻿namespace Resourse
+﻿namespace Resource
 {
     
     public class Log : BaseResource

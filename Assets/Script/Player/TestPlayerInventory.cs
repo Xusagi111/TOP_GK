@@ -1,4 +1,4 @@
-﻿using Resourse;
+﻿using Resource;
 using System.Collections.Generic;
 using UnityEngine;
 
