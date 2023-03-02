@@ -118,6 +118,7 @@ MonoBehaviour:
   <GetCreateResourse>k__BackingField: {fileID: 2498806707076938522}
   <FinalView>k__BackingField: {fileID: 0}
   <TimeCreatingSingleUnit>k__BackingField: 0.3
+  <WarhouseConstruct>k__BackingField: {fileID: 0}
 --- !u!1 &2498806706793679000
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +243,7 @@ GameObject:
   - component: {fileID: 2498806706985312245}
   - component: {fileID: 2498806706985312244}
   m_Layer: 0
-  m_Name: Set_Production
+  m_Name: Add_Resource_Production
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

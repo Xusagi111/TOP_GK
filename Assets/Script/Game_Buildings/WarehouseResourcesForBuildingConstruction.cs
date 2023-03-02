@@ -57,5 +57,6 @@ namespace Building
         public int CountElement;
         public int MaxElement;
         public List<T> AllGameObj;
+        public string NameRes { get; set; }
     }
 }

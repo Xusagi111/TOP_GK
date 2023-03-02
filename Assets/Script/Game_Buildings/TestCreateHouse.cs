@@ -33,7 +33,7 @@ namespace Building
             TestPlayer.AddComponent<Rigidbody>();
             var InvenoryPlayer = TestPlayer.AddComponent<TestPlayerInventory>();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 30; i++)
             {
                 GameObject NewGameOj = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 NewGameOj.transform.position = new Vector3(15, 0.5f);

@@ -33,8 +33,8 @@ namespace Building
             var Creator = this.gameObject.AddComponent<CreateResource>();
             Creator.Init();
 
-            Creator.AddResorseWArhouse.Init(GetCreateResourse.transform, new ResourceWarhouse<Log>() { MaxElement = 10 });
-            Creator.GetResource.Init(GetCreateResourse.transform, null, new ResourceWarhouse<Board>() { MaxElement = 10, AllGameObj = new List<Board>() });
+            Creator.AddResorseWArhouse.Init(GetCreateResourse.transform, new ResourceWarhouse<Log>() { MaxElement = 10 , NameRes = "AddResorseWArhouse"});
+            Creator.GetResource.Init(GetCreateResourse.transform, null, new ResourceWarhouse<Board>() { MaxElement = 10, AllGameObj = new List<Board>(), NameRes = "GetResource" });
 
             СollectionPointResource.EventToContact.AddListener(Creator.AddResource);
             GetCreateResourse.EventToContact.AddListener(Creator.GetContactResource);
