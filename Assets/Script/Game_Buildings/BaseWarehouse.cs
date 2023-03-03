@@ -1,23 +1,19 @@
-﻿using Resourse;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Building
 {
-    public abstract class BaseWarehouse : MonoBehaviour
+    public abstract class  BaseWarehouse : MonoBehaviour
     {
-        [field: SerializeField] public ResourceWarhouse<Log> LogResource { get; protected set; }
-        [field: SerializeField] public ResourceWarhouse<Board> BoardResource { get; protected set; }
-
-        protected LogicContact LogicContact;
-        protected Transform EndMovePositionResource;
+        [field: SerializeField] public ResourceWarhouse AllResorce { get; protected set; }
+        public LogicContact LogicContact;
+        public Transform EndMovePositionResource;
         private bool _isinit { get; set; } = false;
 
-        public void Init(Transform EndMovePositionResource, ResourceWarhouse<Log> LogRes = null, ResourceWarhouse<Board> BoardRes = null)
+        public void NewInit(Transform EndMovePositionResource, ResourceWarhouse NewListRes)
         {
             if (_isinit == true) return;
             _isinit = true;
-            LogResource = LogRes;
-            BoardResource = BoardRes;
+            AllResorce = NewListRes;
             LogicContact = this.gameObject.AddComponent<LogicContact>();
             this.EndMovePositionResource = EndMovePositionResource;
         }

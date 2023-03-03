@@ -3,33 +3,39 @@
 namespace Building
 {
     //Рассположение основных точек взаимодействия на префабе 
-    public class DataBulding : MonoBehaviour //InstanseToPrefab
+    public class DataBulding : MonoBehaviour 
     {
         [field: SerializeField] public ContactWithTheObject ConstructionBulding { get; private set; }
-        [field: SerializeField] public ContactWithTheObject СollectionPointResource { get; private set; }
-        [field: SerializeField] public ContactWithTheObject GetCreateResourse { get; private set; }
+        [field: SerializeField] public ContactWithTheObject GetPointResource { get; private set; }
+        [field: SerializeField] public ContactWithTheObject AddResourse { get; private set; }
         [field: SerializeField] public GameObject FinalView { get; private set; } //Финальный вид здания, изначально он будет не построен.
         [field: SerializeField] public float TimeCreatingSingleUnit { get; private set; }
 
-        //Class Где должен быть содержан ui который в данный момент отобрается.
+        [field: SerializeField] public WarehouseResourcesForBuildingConstruction WarhouseConstruct  { get; private set; }
+
         public void Init()
         {
             ConstructionBulding.gameObject.SetActive(true);
-            СollectionPointResource.gameObject.SetActive(false);
-            GetCreateResourse.gameObject.SetActive(false);
+            GetPointResource.gameObject.SetActive(false);
+            AddResourse.gameObject.SetActive(false);
+            WarhouseConstruct = this.gameObject.AddComponent<WarehouseResourcesForBuildingConstruction>();
         }
 
-        public void EndCreatingFactory()
+        public void EndCreatingFactory() 
         {
+            if (WarhouseConstruct != null) Destroy(WarhouseConstruct);
+
             ConstructionBulding.gameObject.SetActive(false);
-            СollectionPointResource.gameObject.SetActive(true);
-            GetCreateResourse.gameObject.SetActive(true);
+            GetPointResource.gameObject.SetActive(true);
+            AddResourse.gameObject.SetActive(true);
         }
         
         public void EndCreatingIcomeHouse()
         {
+            if (WarhouseConstruct != null) Destroy(WarhouseConstruct);
+
             ConstructionBulding.gameObject.SetActive(false);
-            GetCreateResourse.gameObject.SetActive(true);
+            GetPointResource.gameObject.SetActive(true);
         }
     }
 }
