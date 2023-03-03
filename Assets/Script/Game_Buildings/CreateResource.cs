@@ -1,60 +1,46 @@
 ﻿using Assets.Script.Player;
+using Assets.Script.Player.Interfaces;
 using Building;
 using Resource;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Building
 {
     public class CreateResource : MonoBehaviour
     {
-        [field:SerializeField] public TestCreateResource AddResorseWArhouse { get; set; }
-        [field: SerializeField] public TestCreateResource GetResource { get; set; }
-        [field: SerializeField] public UnityEvent EventFullingResource { get; set; } = new UnityEvent();
+        [field: SerializeField] public TestCreateResource AddResourceWarhouse { get; protected set; }
+        [field: SerializeField] public TestCreateResource GetResource { get; protected set; }
+        public bool _checkCreateResource { get; set; } = false;
 
         public void Init()
         {
-            AddResorseWArhouse =  this.gameObject.AddComponent<TestCreateResource>();
-            GetResource =  this.gameObject.AddComponent<TestCreateResource>();
+            AddResourceWarhouse = this.gameObject.AddComponent<TestCreateResource>();
+            GetResource = this.gameObject.AddComponent<TestCreateResource>();
         }
 
         private void FixedUpdate()
         {
-            if (AddResorseWArhouse.LogResource != null && AddResorseWArhouse.LogResource.CountElement > 0)
+            if (_checkCreateResource == false) return;
+
+            var item = AddResourceWarhouse.AllResorce;
+            if (item.CountCreateResource <= item.CountElement &&
+                GetResource.AllResorce.MaxElement > GetResource.AllResorce.CountElement)
             {
-                AddResorseWArhouse.LogResource.CountElement--;
-                Create<Log, Board>(AddResorseWArhouse.LogResource, GetResource.BoardResource);
+                CreateResourceM(AddResourceWarhouse, GetResource);
             }
-
-            //if (AddResorseWArhouse.BoardResource != null && AddResorseWArhouse.BoardResource.CountElement > 0)
-            //{
-            //    AddResorseWArhouse.BoardResource.CountElement--;
-            //    Create<Board>(GetResource.BoardResource);
-            //}
         }
-
-        private void OnDestroy() => EventFullingResource.RemoveAllListeners();
 
         public void AddResource(GameObject CheckingInventory)
         {
-            Debug.LogWarning("AddResource");
+            var PLayerInventory = GetInventoryUser(CheckingInventory);
+            if (CheckingNullPlayerINventory(PLayerInventory)) return;
 
-            var Inventory = GetInventoryUser(CheckingInventory);
-            if (Inventory == null)
+            var Inventory = PLayerInventory.AllResoursePlayer;
+            var item = AddResourceWarhouse.AllResorce;
+            var WarhouseR = AddResourceWarhouse.AllResorce;
+            if (WarhouseR.AllGameObj.Count < WarhouseR.MaxElement)
             {
-                Debug.LogError("Ошибка у игрока не найден инвентарь");
-                return;
-            }
-
-            //Нужно определить какие из ресурсов являются производимыми, а какие забираемыми 
-            if (Inventory != null)
-            {
-                if (AddResorseWArhouse.LogResource != null && AddResorseWArhouse.LogicContact != null) AddResorseWArhouse.LogicContact.StartCoroutine(
-                    AddResorseWArhouse.LogicContact.GetResourceInventoryToCreateProduct<Log>(AddResorseWArhouse.LogResource, Inventory, AddResorseWArhouse.EndMovePositionResource));
-
-                if (AddResorseWArhouse.BoardResource != null && AddResorseWArhouse.LogicContact != null) AddResorseWArhouse.LogicContact.StartCoroutine(
-                   AddResorseWArhouse.LogicContact.GetResourceInventoryToCreateProduct<Board>(AddResorseWArhouse.BoardResource, Inventory, AddResorseWArhouse.EndMovePositionResource));
+                StartCoroutine(AddResourceWarhouse.LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, AddResourceWarhouse.EndMovePositionResource));
             }
         }
 
@@ -62,84 +48,60 @@ namespace Building
         {
             Debug.LogWarning("GetContactResource");
             var Inventory = GetInventoryUser(CheckingInventory);
-            if (Inventory == null)
-            {
-                Debug.LogError("Ошибка у игрока не найден инвентарь");
-                return;
-            }
+            if (CheckingNullPlayerINventory(Inventory)) return;
 
-            if (GetResource.LogResource?.AllGameObj != null && GetResource.LogResource.CountElement != 0)
+            var item = GetResource.AllResorce;
+            if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
             {
-                GetResource.LogicContact.StartCoroutine(
-                     GetResource.LogicContact.GetAllResource<Log>(GetResource.LogResource, Inventory, CheckingInventory.gameObject.transform));
-            } 
-
-            if (GetResource.BoardResource?.AllGameObj != null && GetResource.BoardResource.CountElement != 0)
-            {
-                GetResource.LogicContact.StartCoroutine(
-                     GetResource.LogicContact.GetAllResource<Board>(GetResource.BoardResource, Inventory, CheckingInventory.gameObject.transform));
+                StartCoroutine(GetResource.LogicContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
             }
         }
 
-        private void Create<E, T>(ResourceWarhouse<E> Warhouse,  ResourceWarhouse<T> resourceWarhouse)
+        private void CreateResourceM(BaseWarehouse WarhoureRes, BaseWarehouse EndWarhouseRes)
         {
-            var BaseRes = Buildings.instance.AllInstanceResource;
-            foreach (var item in BaseRes)
+            var AllBaseResource = Buildings.instance.AllInstanceResource;
+            EnumResource TypeCreateRes = EndWarhouseRes.AllResorce.TypeRes;
+            BaseResource PrefabCreateRes = null;
+
+            foreach (var item in AllBaseResource) 
             {
-                if (item is T )
+                if (item.TypeRes == TypeCreateRes)
                 {
-                    //Прикрепить к нужному гейм объекту.
-                    var CreateR = Instantiate(item, Vector3.one, Quaternion.identity);
-                    CreateR.transform.SetParent(GetResource.EndMovePositionResource);
-                    resourceWarhouse.AllGameObj.Add(CreateR.GetComponent<T>());
-                    Warhouse.CountElement--;
-                    resourceWarhouse.CountElement++;
+                    PrefabCreateRes = item;
+                    break;
                 }
             }
+
+            var ListGetRes = WarhoureRes.AllResorce.AllGameObj;
+            var ListSetRes = EndWarhouseRes.AllResorce.AllGameObj;
+
+            if (PrefabCreateRes != null && ListGetRes.Count > 0)
+            {
+                var CreateR = Instantiate(PrefabCreateRes, Vector3.one, Quaternion.identity);
+                CreateR.transform.SetParent(EndWarhouseRes.EndMovePositionResource);
+                CreateR.transform.position = Vector3.one;
+                var CurrentGetRes = ListGetRes[0];
+                WarhoureRes.AllResorce.AllGameObj.Remove(CurrentGetRes);
+                Destroy(CurrentGetRes.gameObject);
+                ListSetRes.Add(CreateR);
+                EndWarhouseRes.AllResorce.CountElement = ListSetRes.Count;
+            }
+            else Debug.LogError("Данный рессурс равен null");
         }
 
-        private List<BaseResource> GetInventoryUser(GameObject CheckingInventory) 
+        private Inventory GetInventoryUser(GameObject CheckingInventory) 
         {
             var PLayerInventory = CheckingInventory.GetComponent<TestPlayerInventory>();
             if (PLayerInventory == null) return null;
-            else return PLayerInventory.AllResoursePlayer;
+            else return PLayerInventory;
         }
-    }
-}
 
-
-public class CreatorIcome : MonoBehaviour
-{
-    private float _timeOneCreateR;
-    private float _timerCreateR;
-    private bool _isInit = false;
-
-    public LogicContact LogicContact;
-    public Transform EndMovePositionResource;
-
-    public void init(float CountTimeCreateOneResource, Transform EndMovePositionResource)
-    {
-        _timeOneCreateR = CountTimeCreateOneResource;
-        LogicContact = this.gameObject.AddComponent<LogicContact>();
-        this.EndMovePositionResource = EndMovePositionResource;
-        _isInit = true;
-    }
-
-    private void Update()
-    {
-        if (_isInit == false) return;
-
-        _timerCreateR += Time.deltaTime;
-        if (_timerCreateR >= _timeOneCreateR)
+        private bool CheckingNullPlayerINventory(Inventory inventory)
         {
-            _timerCreateR = 0;
-            CreateR();
+            if (inventory == null ||
+                inventory.AllResoursePlayer == null ||
+                inventory.AllResoursePlayer.Count == 0) { Debug.LogError("Ошибка у игрока не найден инвентарь"); return true; }
+            else return false;
         }
     }
-
-    private void CreateR()
-    {
-        Instantiate(Buildings.instance.MoneyPrefab, EndMovePositionResource.position, Quaternion.identity, EndMovePositionResource.transform);
-    }
 }
-

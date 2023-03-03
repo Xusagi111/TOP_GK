@@ -1,25 +1,29 @@
-﻿using Resource;
+﻿using Assets.Script.Player.Interfaces;
+using Resource;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Building
 {
-    //При добавление новых ресурсов, класс должен расшириться.
-
     public class LogicContact : MonoBehaviour
     {
-        public IEnumerator GetResourceInventoryToCreateProduct<T>(ResourceWarhouse<T> Warehouse, List<BaseResource> Inventory, Transform EndMovePosition) where T : BaseResource
+        //При добавлении модифициаруем эту область.
+        public IEnumerator GetResourceInventoryToCreateProduct(ResourceWarhouse Warehouse, List<BaseResource> Inventory, Transform EndMovePosition)
         {
-            List<BaseResource> AllResource = new List<BaseResource>();
+            bool isLogWar = Warehouse.TypeRes == EnumResource.Log;
+            bool isBoardWar = Warehouse.TypeRes == EnumResource.Board;
+            Debug.LogError("Warhouse is Log: " + isLogWar + "   Warhouse is Board: " + isBoardWar);
+
+            List <BaseResource> AllResource = new List<BaseResource>();
             var CountAllElement = Warehouse.CountElement;
 
             foreach (var item in Inventory)
             {
                 if (CountAllElement < Warehouse.MaxElement)
                 {
-                    Debug.LogError(item.GetType() + "   " + typeof(T));
-                    if (item.GetType() == typeof(T))
+                    if (isLogWar && item.TypeRes == EnumResource.Log ||
+                       isBoardWar && item.TypeRes == EnumResource.Board)
                     {
                         CountAllElement++;
                         AllResource.Add(item);
@@ -35,8 +39,7 @@ namespace Building
             }
         }
 
-
-        public IEnumerator GetAllResource<T>(ResourceWarhouse<T> Warehouse, List<BaseResource> Inventory, Transform EndMovePosition) where T : BaseResource
+        public IEnumerator GetAllResource(ResourceWarhouse Warehouse, Inventory Inventory, Transform EndMovePosition)
         {
             List<BaseResource> AllResource = new List<BaseResource>();
 
@@ -53,44 +56,39 @@ namespace Building
         }
 
 
-        public float MoveAnimationObj<T>(List<BaseResource> Resource, ResourceWarhouse<T> EndINventory, Transform EndPosition, List<BaseResource> Inventory) where T : BaseResource
+        public float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, List<BaseResource> Inventory)
         {
-            if (EndINventory == null)
-            {
-                Debug.LogError("Inventory Null");
-                return 0;
-            }
-            if (EndINventory.MaxElement < EndINventory.CountElement + 1)
-            {
-                return 0;
-            }
+            if (EndINventory == null) { Debug.LogError("Inventory Null"); return 0; }
+            if (EndINventory.MaxElement < EndINventory.CountElement + 1) return 0;
+
             var DelResource = Resource[0];
             DelResource.transform.position = EndPosition.position;
-            EndINventory.CountElement++;
+            EndINventory.CountElement = EndINventory.AllGameObj.Count;
+
             Inventory.Remove(DelResource);
-            
             Resource.Remove(DelResource);
-            Destroy(DelResource.gameObject);
+
+            EndINventory.AllGameObj.Add(DelResource);
+            
             return Global.s_TimeMoveResourse;
         }
 
-        public float MoveAnimationToPlayer<T>(List<BaseResource> Resourse, ResourceWarhouse<T> EndINventory, Transform EndPosition, List<BaseResource> Inventory) where T : BaseResource
-        {   
-            if (EndINventory == null || EndINventory?.AllGameObj == null)
-            {
-                Debug.LogError("Inventory Null");
-                return 0;
-            }
-            if (EndINventory.CountElement == 0)
-            {
-                return 0;
-            }
+        public float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, Inventory Inventory)
+        {
+            if (EndINventory == null) { Debug.LogError("Inventory Null"); return 0; }
+            if (Inventory.MaxCountElement < Inventory.AllResoursePlayer.Count + 1) return 0;
 
-            Resourse.Add(EndINventory.AllGameObj[0]);
-            EndINventory.AllGameObj.RemoveAt(0);
-            EndINventory.CountElement--;
-            Resourse[0].transform.position = EndPosition.position;
+            var DelResource = Resource[0];
+            DelResource.transform.position = EndPosition.position;
+
+
+            Inventory.AllResoursePlayer.Add(DelResource);
+            Resource.Remove(DelResource);
+            EndINventory.AllGameObj.Remove(DelResource);
+            EndINventory.CountElement = EndINventory.AllGameObj.Count;
+
             return Global.s_TimeMoveResourse;
         }
+    
     }
 }

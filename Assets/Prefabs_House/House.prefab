@@ -114,8 +114,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ConstructionBulding>k__BackingField: {fileID: 2498806706793679077}
-  "<\u0421ollectionPointResource>k__BackingField": {fileID: 2498806706985312244}
-  <GetCreateResourse>k__BackingField: {fileID: 2498806707076938522}
+  <GetPointResource>k__BackingField: {fileID: 2498806707076938522}
+  <AddResourse>k__BackingField: {fileID: 2498806706985312244}
   <FinalView>k__BackingField: {fileID: 0}
   <TimeCreatingSingleUnit>k__BackingField: 0.3
   <WarhouseConstruct>k__BackingField: {fileID: 0}

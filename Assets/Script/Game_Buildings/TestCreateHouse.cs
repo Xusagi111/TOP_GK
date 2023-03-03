@@ -1,5 +1,6 @@
 ﻿using Assets.Script.Player;
 using Resource;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Building
@@ -17,12 +18,14 @@ namespace Building
             var House1 = Buildings.instance.House1;
             var NewHouse = Instantiate(House1, _onePointCreateBuilding.position, Quaternion.identity);
             NewHouse.Init();
-            //Прокидывание взаимодействия 
             var WarHouse = NewHouse.WarhouseConstruct;
             //Добавление одного типа ресура для постройки. 
-            WarHouse.Init(NewHouse.transform, new ResourceWarhouse<Log>() { MaxElement = 10 });
+            var Resource = new ResourceWarhouse(EnumResource.Log);
+
+            WarHouse.NewInit(NewHouse.transform, Resource);
             NewHouse.ConstructionBulding.EventToContact.AddListener(WarHouse.AddResource);
             WarHouse.EventFullingResource.AddListener(NewHouse.EndCreatingFactory);
+
         }
 
         private void CreatePlayer()
