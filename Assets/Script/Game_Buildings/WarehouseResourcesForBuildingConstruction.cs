@@ -34,12 +34,12 @@ namespace Building
                 Debug.Log("Завершение строительства");
                 _isFullingRes = true;
                 EventFullingResource?.Invoke();
+
             }
         }
 
         private void OnDestroy()
         {
-            EventFullingResource.RemoveAllListeners();
             Destroy(LogicContact);
             foreach (var item in AllResorce.AllGameObj) Destroy(item.gameObject);
         }

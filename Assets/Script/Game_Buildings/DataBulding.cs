@@ -1,6 +1,4 @@
-﻿using Resource;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Building
 {
@@ -23,38 +21,21 @@ namespace Building
             WarhouseConstruct = this.gameObject.AddComponent<WarehouseResourcesForBuildingConstruction>();
         }
 
-        public void EndCreatingFactory()
+        public void EndCreatingFactory() 
         {
             if (WarhouseConstruct != null) Destroy(WarhouseConstruct);
 
             ConstructionBulding.gameObject.SetActive(false);
             GetPointResource.gameObject.SetActive(true);
             AddResourse.gameObject.SetActive(true);
-            var Creator = this.gameObject.AddComponent<CreateResource>();
-            Creator.Init();
-
-            ResourceWarhouse AddResource = new ResourceWarhouse(EnumResource.Log);
-            ResourceWarhouse GetResource = new ResourceWarhouse(EnumResource.Board);
-
-            Creator.AddResourceWarhouse.NewInit(AddResourse.transform, AddResource);
-            Creator.GetResource.NewInit(GetPointResource.transform, GetResource);
-
-            Creator._checkCreateResource = true;
-
-       
-
-            GetPointResource.EventToContact.AddListener(Creator.GetContactResource);
-            AddResourse.EventToContact.AddListener(Creator.AddResource);
         }
         
         public void EndCreatingIcomeHouse()
         {
+            if (WarhouseConstruct != null) Destroy(WarhouseConstruct);
+
             ConstructionBulding.gameObject.SetActive(false);
-            AddResourse.gameObject.SetActive(true);
-            var Creator = this.gameObject.AddComponent<CreatorIcome>();
-            const int TimeCreateOneProduct = 3;
-            Creator.init(TimeCreateOneProduct, AddResourse.gameObject.transform);
-            //Добавить компонент который будет производить деньги, или же другую продукцию. 
+            GetPointResource.gameObject.SetActive(true);
         }
     }
 }

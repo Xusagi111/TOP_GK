@@ -2,6 +2,6 @@
 {
     public enum EnumResource
     { 
-       NullType, Log, Board
+       NullType, Log, Board, Money
     }
 }

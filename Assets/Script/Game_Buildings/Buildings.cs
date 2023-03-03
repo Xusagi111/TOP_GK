@@ -12,7 +12,6 @@ namespace Building
 
         public DataBulding House1;
         public DataBulding House2;
-        public DataBulding House3;
 
         public MoneyObj MoneyPrefab;
 
