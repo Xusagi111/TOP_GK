@@ -1,6 +1,5 @@
 ﻿using Assets.Script.Player;
 using Resource;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Building
@@ -9,6 +8,7 @@ namespace Building
     {
         [field:SerializeField] private Transform _onePointCreateBuilding { get; set; }
         [field:SerializeField] private Transform _twoPointCreateBuilding { get; set; }
+        [field:SerializeField] private Transform _threePointCreateBuilding { get; set; }
 
         private void Start()
         {
@@ -18,7 +18,10 @@ namespace Building
             //Создание здания
             CreateHouseFactory(Buildings.instance.House1, EnumResource.Log, EnumResource.Log, EnumResource.Board);
             //Создания здания который производит конкретный рессурс
-            CreateHouseIcomeResource(Buildings.instance.House2, Buildings.instance.MoneyPrefab, EnumResource.Log);
+            CreateHouseIcomeResource(Buildings.instance.House2, Buildings.instance.MoneyPrefab, EnumResource.Log, EnumResource.Money, _twoPointCreateBuilding);
+
+            //Cоздания здания без сборки
+            CreateHouseNoConstructRes(Buildings.instance.House2, Buildings.instance.PrefabCreateLogRes, EnumResource.Log, _threePointCreateBuilding);
         }
 
         private void CreateHouseFactory(DataBulding instanceHouse, EnumResource AddConstructR, EnumResource AddCreateR, EnumResource GetCreateR)
@@ -38,7 +41,7 @@ namespace Building
         private void ModificalCreatorHouse(DataBulding CreatorHouse, ContactWithTheObject AddResourse, ContactWithTheObject GetPointResource, EnumResource AddCreateR, EnumResource GetCreateR)
         {
             var Creator = CreatorHouse.gameObject.AddComponent<CreateResource>();
-            Creator.Init();
+            Creator.Init(CreatorHouse.TimeCreateOneResource);
 
             ResourceWarhouse AddResource = new ResourceWarhouse(AddCreateR);
             ResourceWarhouse GetResource = new ResourceWarhouse(GetCreateR);
@@ -52,9 +55,9 @@ namespace Building
         }
 
 
-        private void CreateHouseIcomeResource(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource GetCreateR)
+        private void CreateHouseIcomeResource(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource GetCreateR, EnumResource CreateR, Transform positionCreateHouse)
         {
-            var NewHouse = Instantiate(instanceHouse, _twoPointCreateBuilding.position, Quaternion.identity);
+            var NewHouse = Instantiate(instanceHouse, positionCreateHouse.position, Quaternion.identity);
             NewHouse.Init();
             var WarHouse = NewHouse.WarhouseConstruct;
             //Добавление одного типа ресура для постройки. 
@@ -63,7 +66,14 @@ namespace Building
             WarHouse.NewInit(NewHouse.transform, Resource);
             NewHouse.ConstructionBulding.EventToContact.AddListener(WarHouse.AddResource);
             WarHouse.EventFullingResource.AddListener(NewHouse.EndCreatingIcomeHouse);
-            WarHouse.EventFullingResource.AddListener(() => ModificalCreatorIcomeHouse(NewHouse, NewHouse.GetPointResource, EndCreateR, GetCreateR));
+            WarHouse.EventFullingResource.AddListener(() => ModificalCreatorIcomeHouse(NewHouse, NewHouse.GetPointResource, EndCreateR, CreateR));
+        }
+
+        private void CreateHouseNoConstructRes(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource CreateR, Transform positionCreateHouse)
+        {
+            var NewHouse = Instantiate(instanceHouse, positionCreateHouse.position, Quaternion.identity);
+            NewHouse.EndCreatingIcomeHouse();
+            ModificalCreatorIcomeHouse(NewHouse, NewHouse.GetPointResource, EndCreateR, CreateR);
         }
 
         private void ModificalCreatorIcomeHouse(DataBulding CreatorHouse, ContactWithTheObject GetPointResource, BaseResource EndCreateR, EnumResource GetCreateR)
@@ -71,7 +81,7 @@ namespace Building
             var Creator = CreatorHouse.gameObject.AddComponent<CreatorIcome>();
             const int TimeCreateOneProduct = 3;
             var ResourceWarhouse = new ResourceWarhouse(GetCreateR);
-            Creator.init(TimeCreateOneProduct, GetPointResource.gameObject.transform, EndCreateR, ResourceWarhouse);
+            Creator.init(TimeCreateOneProduct, GetPointResource.gameObject.transform, EndCreateR, ResourceWarhouse, CreatorHouse.TimeCreateOneResource);
             GetPointResource.EventToContact.AddListener(Creator.GetContactResource);
         }
 

@@ -2,6 +2,7 @@
 using Resource;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,14 @@ namespace Building
     {
         [field: SerializeField] public UnityEvent EventFullingResource { get; set; } = new UnityEvent();
         private bool _isFullingRes { get; set; } = false;
+        [field: SerializeField] public TextMeshProUGUI TimeCreateOneResource { get; private set; }
+        private bool _isInit { get; set; } = false;
+
+        public  void Init(TextMeshProUGUI TimeCreateOneResource)
+        {
+            this.TimeCreateOneResource = TimeCreateOneResource;
+            _isInit = true;
+        }
 
         public void AddResource(GameObject CheckingInventory)
         {
@@ -29,13 +38,16 @@ namespace Building
 
         private void FixedUpdate()
         {
+            if (_isInit == false) return;
+
             if (_isFullingRes == false && CheckFullingResource()) 
             {
                 Debug.Log("Завершение строительства");
                 _isFullingRes = true;
                 EventFullingResource?.Invoke();
-
             }
+
+            TimeCreateOneResource.text = $"{AllResorce.TypeRes} {AllResorce.MaxElement - AllResorce.AllGameObj.Count}";
         }
 
         private void OnDestroy()
@@ -61,6 +73,7 @@ namespace Building
         public List<BaseResource> AllGameObj = new List<BaseResource>();
         public string NameRes { get; set; }
         public int CountCreateResource { get; set; } = 1; //Пока не используется. 
+        public float TimeCreateOneResource { get; set; } = 3;
         public EnumResource TypeRes { get; private set; }
 
         public ResourceWarhouse(EnumResource TypeRes)

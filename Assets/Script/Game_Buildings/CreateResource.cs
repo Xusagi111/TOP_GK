@@ -1,4 +1,5 @@
 ﻿using Resource;
+using TMPro;
 using UnityEngine;
 
 namespace Building
@@ -8,14 +9,19 @@ namespace Building
         [field: SerializeField] public TestCreateResource AddResourceWarhouse { get; protected set; }
         [field: SerializeField] public TestCreateResource GetResource { get; protected set; }
         public bool _checkCreateResource { get; set; } = false;
+        [field: SerializeField] public TextMeshProUGUI CreateTimeResT { get; protected set; }
+        [field: SerializeField] public float TimerCreateR { get; private set; } = 3;
+        private float _timeOneCreateR { get; set; }
 
-        public void Init()
+
+        public void Init(TextMeshProUGUI TimeCreateOneRes)
         {
             AddResourceWarhouse = this.gameObject.AddComponent<TestCreateResource>();
             GetResource = this.gameObject.AddComponent<TestCreateResource>();
+            CreateTimeResT = TimeCreateOneRes;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (_checkCreateResource == false) return;
 
@@ -23,8 +29,17 @@ namespace Building
             if (item.CountCreateResource <= item.CountElement &&
                 GetResource.AllResorce.MaxElement > GetResource.AllResorce.CountElement)
             {
-                CreateResourceM(AddResourceWarhouse, GetResource);
+                var DifferenceTime = TimerCreateR - _timeOneCreateR;
+                _timeOneCreateR = _timeOneCreateR - Time.deltaTime;
+                CreateTimeResT.text = DifferenceTime >= 0 ? "" : $"{_timeOneCreateR} / {TimerCreateR}";
+
+                if (_timeOneCreateR <= 0)
+                {
+                    _timeOneCreateR = TimerCreateR;
+                    CreateResourceM(AddResourceWarhouse, GetResource);
+                }
             }
+            else CreateTimeResT.text = "";
         }
 
         public void AddResource(GameObject CheckingInventory)
