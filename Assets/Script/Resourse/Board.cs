@@ -1,8 +1,6 @@
-﻿using Resourse;
-
-namespace Resource
+﻿namespace Resource
 {
-    public class Board : BaseResourse
+    public class Board : BaseResource
     {
         Board()
         {

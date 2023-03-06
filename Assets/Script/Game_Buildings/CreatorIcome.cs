@@ -1,9 +1,5 @@
 ﻿using Resource;
-<<<<<<< Updated upstream
 using TMPro;
-=======
-using Resourse;
->>>>>>> Stashed changes
 using UnityEngine;
 
 namespace Building
@@ -19,13 +15,9 @@ namespace Building
 
         public LogicContact LogicContact;
 
-        private BaseResourse _createResource;
+        private BaseResource _createResource;
  
-<<<<<<< Updated upstream
         public void Init(float CountTimeCreateOneResource, Transform EndMovePositionResource, BaseResource InstanceCreateResource, ResourceWarhouse resourceWarhouse, TextMeshProUGUI CreateTimeOneRes)
-=======
-        public void init(float CountTimeCreateOneResource, Transform EndMovePositionResource, BaseResourse InstanceCreateResource, ResourceWarhouse resourceWarhouse)
->>>>>>> Stashed changes
         {
             _timeOneCreateR = CountTimeCreateOneResource;
             _createResource = InstanceCreateResource;

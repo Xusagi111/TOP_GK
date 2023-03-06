@@ -1,6 +1,5 @@
 ﻿using Assets.Script.Player;
 using Resource;
-using Resourse;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -72,7 +71,7 @@ namespace Building
     {
         public int CountElement;
         public int MaxElement = 10;
-        public List<BaseResourse> AllGameObj = new List<BaseResourse>();
+        public List<BaseResource> AllGameObj = new List<BaseResource>();
         public string NameRes { get; set; }
         public int CountCreateResource { get; set; } = 1; //Пока не используется. 
         public float TimeCreateOneResource { get; set; } = 3;

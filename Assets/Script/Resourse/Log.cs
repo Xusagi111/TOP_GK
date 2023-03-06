@@ -1,17 +1,11 @@
-﻿using Resourse;
-using UnityEngine;
-
-namespace Resource
+﻿namespace Resource
 {
     
-    public class Log : BaseResourse
+    public class Log : BaseResource
     {
-      
         Log()
         {
             TypeRes = EnumResource.Log;
         }
-
-
     }
 }

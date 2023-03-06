@@ -1,6 +1,5 @@
 ﻿using Assets.Script.Player.Interfaces;
 using Resource;
-using Resourse;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +9,13 @@ namespace Building
     public class LogicContact : MonoBehaviour
     {
         //При добавлении модифициаруем эту область.
-        public IEnumerator GetResourceInventoryToCreateProduct(ResourceWarhouse Warehouse, List<BaseResourse> Inventory, Transform EndMovePosition)
+        public IEnumerator GetResourceInventoryToCreateProduct(ResourceWarhouse Warehouse, List<BaseResource> Inventory, Transform EndMovePosition)
         {
             bool isLogWar = Warehouse.TypeRes == EnumResource.Log;
             bool isBoardWar = Warehouse.TypeRes == EnumResource.Board;
             Debug.LogError("Warhouse is Log: " + isLogWar + "   Warhouse is Board: " + isBoardWar);
 
-            List <BaseResourse> AllResource = new List<BaseResourse>();
+            List <BaseResource> AllResource = new List<BaseResource>();
             var CountAllElement = Warehouse.CountElement;
 
             foreach (var item in Inventory)
@@ -42,7 +41,7 @@ namespace Building
 
         public IEnumerator GetAllResource(ResourceWarhouse Warehouse, Inventory Inventory, Transform EndMovePosition)
         {
-            List<BaseResourse> AllResource = new List<BaseResourse>();
+            List<BaseResource> AllResource = new List<BaseResource>();
 
             if (Warehouse.CountElement != 0)
             {
@@ -57,7 +56,7 @@ namespace Building
         }
 
 
-        public float MoveAnimationObj(List<BaseResourse> Resource, ResourceWarhouse EndINventory, Transform EndPosition, List<BaseResourse> Inventory)
+        public float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, List<BaseResource> Inventory)
         {
             if (EndINventory == null) { Debug.LogError("Inventory Null"); return 0; }
             if (EndINventory.MaxElement < EndINventory.CountElement + 1) return 0;
@@ -74,7 +73,7 @@ namespace Building
             return Global.s_TimeMoveResourse;
         }
 
-        public float MoveAnimationObj(List<BaseResourse> Resource, ResourceWarhouse EndINventory, Transform EndPosition, Inventory Inventory)
+        public float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, Inventory Inventory)
         {
             if (EndINventory == null) { Debug.LogError("Inventory Null"); return 0; }
             if (Inventory.MaxCountElement < Inventory.AllResoursePlayer.Count + 1) return 0;
