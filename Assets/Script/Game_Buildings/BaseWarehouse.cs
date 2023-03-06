@@ -5,7 +5,7 @@ namespace Building
     public abstract class  BaseWarehouse : MonoBehaviour
     {
         [field: SerializeField] public ResourceWarhouse AllResorce { get; protected set; }
-        public LogicContact LogicContact;
+        public InventoryContact LogicContact;
         public Transform EndMovePositionResource;
         private bool _isinit { get; set; } = false;
 
@@ -14,7 +14,7 @@ namespace Building
             if (_isinit == true) return;
             _isinit = true;
             AllResorce = NewListRes;
-            LogicContact = this.gameObject.AddComponent<LogicContact>();
+            LogicContact = this.gameObject.AddComponent<InventoryContact>();
             this.EndMovePositionResource = EndMovePositionResource;
         }
     }

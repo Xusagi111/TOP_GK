@@ -6,24 +6,18 @@ using UnityEngine;
 
 namespace Building
 {
-    public class LogicContact : MonoBehaviour
+    public class InventoryContact : MonoBehaviour
     {
-        //При добавлении модифициаруем эту область.
         public IEnumerator GetResourceInventoryToCreateProduct(ResourceWarhouse Warehouse, List<BaseResource> Inventory, Transform EndMovePosition)
         {
-            bool isLogWar = Warehouse.TypeRes == EnumResource.Log;
-            bool isBoardWar = Warehouse.TypeRes == EnumResource.Board;
-            Debug.LogError("Warhouse is Log: " + isLogWar + "   Warhouse is Board: " + isBoardWar);
-
             List <BaseResource> AllResource = new List<BaseResource>();
-            var CountAllElement = Warehouse.CountElement;
+            var CountAllElement = Warehouse.AllGameObj.Count;
 
             foreach (var item in Inventory)
             {
                 if (CountAllElement < Warehouse.MaxElement)
                 {
-                    if (isLogWar && item.TypeRes == EnumResource.Log ||
-                       isBoardWar && item.TypeRes == EnumResource.Board)
+                    if (item.TypeRes == Warehouse.TypeRes)
                     {
                         CountAllElement++;
                         AllResource.Add(item);
@@ -43,7 +37,7 @@ namespace Building
         {
             List<BaseResource> AllResource = new List<BaseResource>();
 
-            if (Warehouse.CountElement != 0)
+            if (Warehouse.AllGameObj.Count != 0)
             {
                 foreach (var item in Warehouse.AllGameObj) AllResource.Add(item);
             }
@@ -59,11 +53,10 @@ namespace Building
         public float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, List<BaseResource> Inventory)
         {
             if (EndINventory == null) { Debug.LogError("Inventory Null"); return 0; }
-            if (EndINventory.MaxElement < EndINventory.CountElement + 1) return 0;
+            if (EndINventory.MaxElement < EndINventory.AllGameObj.Count + 1) return 0;
 
             var DelResource = Resource[0];
             DelResource.transform.position = EndPosition.position;
-            EndINventory.CountElement = EndINventory.AllGameObj.Count;
 
             Inventory.Remove(DelResource);
             Resource.Remove(DelResource);
@@ -85,7 +78,6 @@ namespace Building
             Inventory.AllResoursePlayer.Add(DelResource);
             Resource.Remove(DelResource);
             EndINventory.AllGameObj.Remove(DelResource);
-            EndINventory.CountElement = EndINventory.AllGameObj.Count;
 
             return Global.s_TimeMoveResourse;
         }

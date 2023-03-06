@@ -26,8 +26,8 @@ namespace Building
             if (_checkCreateResource == false) return;
 
             var item = AddResourceWarhouse.AllResorce;
-            if (item.CountCreateResource <= item.CountElement &&
-                GetResource.AllResorce.MaxElement > GetResource.AllResorce.CountElement)
+            if (item.AllGameObj.Count <= item.AllGameObj.Count &&
+                GetResource.AllResorce.MaxElement > GetResource.AllResorce.AllGameObj.Count)
             {
                 var DifferenceTime = TimerCreateR - _timeOneCreateR;
                 _timeOneCreateR = _timeOneCreateR - Time.deltaTime;
@@ -44,8 +44,8 @@ namespace Building
 
         public void AddResource(GameObject CheckingInventory)
         {
-            var PLayerInventory = ExtensionMethodsBildings.GetInventoryUser(CheckingInventory);
-            if (ExtensionMethodsBildings.CheckingNullPlayerINventory(PLayerInventory)) return;
+            var PLayerInventory = GetInventory.GetInventoryUser(CheckingInventory);
+            if (GetInventory.CheckingNullPlayerINventory(PLayerInventory)) return;
 
             var Inventory = PLayerInventory.AllResoursePlayer;
             var item = AddResourceWarhouse.AllResorce;
@@ -59,8 +59,8 @@ namespace Building
         public void GetContactResource(GameObject CheckingInventory)
         {
             Debug.LogWarning("GetContactResource");
-            var Inventory = ExtensionMethodsBildings.GetInventoryUser(CheckingInventory);
-            if (ExtensionMethodsBildings.CheckingNullPlayerINventory(Inventory)) return;
+            var Inventory = GetInventory.GetInventoryUser(CheckingInventory);
+            if (GetInventory.CheckingNullPlayerINventory(Inventory)) return;
 
             var item = GetResource.AllResorce;
             if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
@@ -96,7 +96,6 @@ namespace Building
                 WarhoureRes.AllResorce.AllGameObj.Remove(CurrentGetRes);
                 Destroy(CurrentGetRes.gameObject);
                 ListSetRes.Add(CreateR);
-                EndWarhouseRes.AllResorce.CountElement = ListSetRes.Count;
             }
             else Debug.LogError("Данный рессурс равен null");
         }

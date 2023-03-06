@@ -8,12 +8,13 @@ using UnityEngine.Events;
 
 namespace Building
 {
-    public class WarehouseResourcesForBuildingConstruction : BaseWarehouse
+    public class WarehouseResourcesForBuildingConstruction : MonoBehaviour
     {
         [field: SerializeField] public UnityEvent EventFullingResource { get; set; } = new UnityEvent();
         private bool _isFullingRes { get; set; } = false;
         [field: SerializeField] public TextMeshProUGUI TimeCreateOneResourceT { get; private set; }
         private bool _isInit { get; set; } = false;
+        private BaseWarehouse _allBaseRes;
 
         public  void Init(TextMeshProUGUI TimeCreateOneResource)
         {
@@ -32,8 +33,8 @@ namespace Building
             }
 
             var Inventory = PLayerInventory.AllResoursePlayer;
-            var item = AllResorce;
-                LogicContact.StartCoroutine(LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, EndMovePositionResource));
+            var item = _allBaseRes.AllResorce;
+            _allBaseRes.LogicContact.StartCoroutine(_allBaseRes.LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, _allBaseRes.EndMovePositionResource));
         }
 
         private void FixedUpdate()
@@ -47,34 +48,28 @@ namespace Building
                 EventFullingResource?.Invoke();
             }
 
-            TimeCreateOneResourceT.text = $"{AllResorce.TypeRes} {AllResorce.MaxElement - AllResorce.AllGameObj.Count}";
+            TimeCreateOneResourceT.text = $"{_allBaseRes.AllResorce.TypeRes} {_allBaseRes.AllResorce.MaxElement - _allBaseRes.AllResorce.AllGameObj.Count}";
         }
 
         private void OnDestroy()
         {
-            Destroy(LogicContact);
-            foreach (var item in AllResorce.AllGameObj) Destroy(item.gameObject);
+            Destroy(_allBaseRes.LogicContact);
+            foreach (var item in _allBaseRes.AllResorce.AllGameObj) Destroy(item.gameObject);
             EventFullingResource.RemoveAllListeners();
         }
 
         private bool CheckFullingResource()
         {
-            if (AllResorce.AllGameObj.Count == AllResorce.MaxElement) return true;
+            if (_allBaseRes.AllResorce.AllGameObj.Count == _allBaseRes.AllResorce.MaxElement) return true;
             else return false;
         }
-
     }
-
 
     [System.Serializable]
     public class ResourceWarhouse 
     {
-        public int CountElement;
         public int MaxElement = 10;
         public List<BaseResource> AllGameObj = new List<BaseResource>();
-        public string NameRes { get; set; }
-        public int CountCreateResource { get; set; } = 1; //Пока не используется. 
-        public float TimeCreateOneResource { get; set; } = 3;
         public EnumResource TypeRes { get; private set; }
 
         public ResourceWarhouse(EnumResource TypeRes)

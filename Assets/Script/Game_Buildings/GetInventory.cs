@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Building
 {
-    public static class ExtensionMethodsBildings 
+    public static class GetInventory 
     {
         public static Inventory GetInventoryUser(GameObject CheckingInventory)
         {

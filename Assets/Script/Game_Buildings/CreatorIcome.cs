@@ -13,7 +13,7 @@ namespace Building
         private float _timerCreateR = 3;
         private bool _isInit = false;
 
-        public LogicContact LogicContact;
+        public InventoryContact LogicContact;
 
         private BaseResource _createResource;
  
@@ -22,7 +22,7 @@ namespace Building
             _timeOneCreateR = CountTimeCreateOneResource;
             _createResource = InstanceCreateResource;
 
-            LogicContact = this.gameObject.AddComponent<LogicContact>();
+            LogicContact = this.gameObject.AddComponent<InventoryContact>();
             GetResource = this.gameObject.AddComponent<CreateResource>();
 
             GetResource.Init(EndMovePositionResource, resourceWarhouse);
@@ -57,8 +57,8 @@ namespace Building
         public void GetContactResource(GameObject CheckingInventory)
         {
             Debug.LogWarning("GetContactResource");
-            var Inventory = ExtensionMethodsBildings.GetInventoryUser(CheckingInventory);
-            if (ExtensionMethodsBildings.CheckingNullPlayerINventory(Inventory)) return;
+            var Inventory = GetInventory.GetInventoryUser(CheckingInventory);
+            if (GetInventory.CheckingNullPlayerINventory(Inventory)) return;
 
             var item = GetResource.AllResorce;
             if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
