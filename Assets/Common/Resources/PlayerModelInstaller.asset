@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerModelInstaller
   m_EditorClassIdentifier: 
   playerModel:
-    speed: 1
+    speed: 0.5
     rotationSpeed: 200
     gravity: 20
   playerPrefab: {fileID: 925375133378940864, guid: ef70663d0b915d74da0144cf58826e35,
