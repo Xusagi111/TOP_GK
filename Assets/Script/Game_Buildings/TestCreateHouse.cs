@@ -1,6 +1,11 @@
 ﻿using Assets.Script.Player;
 using Assets.Script.Player.Interfaces;
 using Resource;
+<<<<<<< Updated upstream
+=======
+using Resourse;
+using System.Collections.Generic;
+>>>>>>> Stashed changes
 using UnityEngine;
 
 namespace Building
@@ -54,7 +59,12 @@ namespace Building
             AddResourse.EventToContact.AddListener(Creator.AddResource);
         }
 
+<<<<<<< Updated upstream
         private void CreateBuoldingsIcomeResource(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource GetCreateR, EnumResource CreateR, Transform positionCreateHouse)
+=======
+
+        private void CreateHouseIcomeResource(DataBulding instanceHouse, BaseResourse EndCreateR, EnumResource GetCreateR)
+>>>>>>> Stashed changes
         {
             var NewHouse = Instantiate(instanceHouse, positionCreateHouse.position, Quaternion.identity);
             NewHouse.Init();
@@ -68,6 +78,7 @@ namespace Building
             WarHouse.EventFullingResource.AddListener(() => ModificalCreatorIcomeBuildings(NewHouse, NewHouse.GetPointResource, EndCreateR, CreateR));
         }
 
+<<<<<<< Updated upstream
         private void CreateBuildingsNoConstructRes(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource CreateR, Transform positionCreateHouse)
         {
             var NewHouse = Instantiate(instanceHouse, positionCreateHouse.position, Quaternion.identity);
@@ -76,6 +87,9 @@ namespace Building
         }
 
         private void ModificalCreatorIcomeBuildings(DataBulding CreatorHouse, ContactWithTheObject GetPointResource, BaseResource EndCreateR, EnumResource GetCreateR)
+=======
+        private void ModificalCreatorIcomeHouse(DataBulding CreatorHouse, ContactWithTheObject GetPointResource, BaseResourse EndCreateR, EnumResource GetCreateR)
+>>>>>>> Stashed changes
         {
             const int TimeCreateOneProduct = 3;
             var Creator = CreatorHouse.gameObject.AddComponent<CreatorIcome>();

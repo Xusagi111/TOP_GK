@@ -1,5 +1,6 @@
 using Assets.Script.Resourse;
 using Resource;
+using Resourse;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Building
         public MoneyObj MoneyPrefab;
         public BaseResource PrefabCreateLogRes;
 
-        public List<BaseResource> AllInstanceResource;
+        public List<BaseResourse> AllInstanceResource;
 
         private void Awake()
         {

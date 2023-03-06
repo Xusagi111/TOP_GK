@@ -1,8 +1,9 @@
 ﻿using Resource;
+using Resourse;
 
 namespace Assets.Script.Resourse
 {
-    public class MoneyObj : BaseResource
+    public class MoneyObj : BaseResourse
     {
         MoneyObj()
         {
