@@ -1,15 +1,14 @@
-using Resourse;
-using System.Collections;
-using System.Collections.Generic;
+using Resource;
 using UnityEngine;
 
 public class ResourceHolder : MonoBehaviour
 {
-    [SerializeField] private BaseResourse resourse;
+    [SerializeField] private BaseResource resourse;
+    [SerializeField] private Transform tr;
     // Start is called before the first frame update
     void Start()
     {
-        resourse.Jump(transform.position, new Vector3(1, 0, 1), 2);
+        resourse.Jump(new Vector3(3,3,3), tr, 2);
     }
 
     // Update is called once per frame
