@@ -89,6 +89,5 @@ namespace Building
 
             return Global.s_TimeMoveResourse;
         }
-    
     }
 }

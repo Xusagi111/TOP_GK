@@ -6,7 +6,7 @@ namespace Building
 {
     public class CreatorIcome : MonoBehaviour
     {
-        [field: SerializeField] public TestCreateResource GetResource { get; protected set; }
+        [field: SerializeField] public CreateResource GetResource { get; protected set; }
         [field: SerializeField] public TextMeshProUGUI  CreateTimeRes { get; protected set; }
 
         private float _timeOneCreateR;
@@ -17,15 +17,15 @@ namespace Building
 
         private BaseResource _createResource;
  
-        public void init(float CountTimeCreateOneResource, Transform EndMovePositionResource, BaseResource InstanceCreateResource, ResourceWarhouse resourceWarhouse, TextMeshProUGUI CreateTimeOneRes)
+        public void Init(float CountTimeCreateOneResource, Transform EndMovePositionResource, BaseResource InstanceCreateResource, ResourceWarhouse resourceWarhouse, TextMeshProUGUI CreateTimeOneRes)
         {
             _timeOneCreateR = CountTimeCreateOneResource;
             _createResource = InstanceCreateResource;
 
             LogicContact = this.gameObject.AddComponent<LogicContact>();
-            GetResource = this.gameObject.AddComponent<TestCreateResource>();
+            GetResource = this.gameObject.AddComponent<CreateResource>();
 
-            GetResource.NewInit(EndMovePositionResource, resourceWarhouse);
+            GetResource.Init(EndMovePositionResource, resourceWarhouse);
             _isInit = true;
             CreateTimeRes = CreateTimeOneRes;
             _timeOneCreateR = _timerCreateR;

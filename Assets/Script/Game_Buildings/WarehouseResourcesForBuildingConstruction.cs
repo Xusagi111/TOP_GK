@@ -12,12 +12,12 @@ namespace Building
     {
         [field: SerializeField] public UnityEvent EventFullingResource { get; set; } = new UnityEvent();
         private bool _isFullingRes { get; set; } = false;
-        [field: SerializeField] public TextMeshProUGUI TimeCreateOneResource { get; private set; }
+        [field: SerializeField] public TextMeshProUGUI TimeCreateOneResourceT { get; private set; }
         private bool _isInit { get; set; } = false;
 
         public  void Init(TextMeshProUGUI TimeCreateOneResource)
         {
-            this.TimeCreateOneResource = TimeCreateOneResource;
+            this.TimeCreateOneResourceT = TimeCreateOneResource;
             _isInit = true;
         }
 
@@ -47,13 +47,14 @@ namespace Building
                 EventFullingResource?.Invoke();
             }
 
-            TimeCreateOneResource.text = $"{AllResorce.TypeRes} {AllResorce.MaxElement - AllResorce.AllGameObj.Count}";
+            TimeCreateOneResourceT.text = $"{AllResorce.TypeRes} {AllResorce.MaxElement - AllResorce.AllGameObj.Count}";
         }
 
         private void OnDestroy()
         {
             Destroy(LogicContact);
             foreach (var item in AllResorce.AllGameObj) Destroy(item.gameObject);
+            EventFullingResource.RemoveAllListeners();
         }
 
         private bool CheckFullingResource()

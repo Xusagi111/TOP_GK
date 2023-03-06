@@ -120,7 +120,7 @@ MonoBehaviour:
   <FinalView>k__BackingField: {fileID: 0}
   <TimeCreatingSingleUnit>k__BackingField: 0.3
   <WarhouseConstruct>k__BackingField: {fileID: 0}
-  <TimeCreateOneResource>k__BackingField: {fileID: 5476499891453844511}
+  <TimeCreateOneResourceT>k__BackingField: {fileID: 5476499891453844511}
 --- !u!1 &5458390371028811412
 GameObject:
   m_ObjectHideFlags: 0

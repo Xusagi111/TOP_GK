@@ -14,7 +14,7 @@ namespace Building
 
         [field: SerializeField] public WarehouseResourcesForBuildingConstruction WarhouseConstruct  { get; private set; } //Test Vizialization
 
-        [field: SerializeField] public TextMeshProUGUI TimeCreateOneResource { get; private set; }
+        [field: SerializeField] public TextMeshProUGUI TimeCreateOneResourceT { get; private set; }
 
         public void Init()
         {
@@ -22,7 +22,7 @@ namespace Building
             GetPointResource.gameObject.SetActive(false);
             AddResourse.gameObject.SetActive(false);
             WarhouseConstruct = this.gameObject.AddComponent<WarehouseResourcesForBuildingConstruction>();
-            WarhouseConstruct.Init(TimeCreateOneResource);
+            WarhouseConstruct.Init(TimeCreateOneResourceT);
         }
 
         public void EndCreatingFactory() 
@@ -34,7 +34,7 @@ namespace Building
             AddResourse.gameObject.SetActive(true);
         }
         
-        public void EndCreatingIcomeHouse()
+        public void EndCreatingIcomeBuildings()
         {
             if (WarhouseConstruct != null) Destroy(WarhouseConstruct);
 
