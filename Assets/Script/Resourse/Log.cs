@@ -1,8 +1,11 @@
-﻿namespace Resourse
+﻿namespace Resource
 {
     
-    public class Log : BaseResourse
+    public class Log : BaseResource
     {
-
+        Log()
+        {
+            TypeRes = EnumResource.Log;
+        }
     }
 }
