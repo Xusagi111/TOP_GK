@@ -2,7 +2,7 @@
 
 public class Global : MonoBehaviour
 {
-    public static float s_TimeMoveResourse;
+    public static float s_TimeMoveResourse = 2f;
 
     public float TimeMoveResourse;
 
