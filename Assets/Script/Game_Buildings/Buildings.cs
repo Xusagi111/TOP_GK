@@ -14,6 +14,7 @@ namespace Building
         public DataBulding House2;
 
         public MoneyObj MoneyPrefab;
+        public BaseResource PrefabCreateLogRes;
 
         public List<BaseResource> AllInstanceResource;
 

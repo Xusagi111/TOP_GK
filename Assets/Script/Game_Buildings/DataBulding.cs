@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 namespace Building
 {
@@ -11,7 +12,9 @@ namespace Building
         [field: SerializeField] public GameObject FinalView { get; private set; } //Финальный вид здания, изначально он будет не построен.
         [field: SerializeField] public float TimeCreatingSingleUnit { get; private set; }
 
-        [field: SerializeField] public WarehouseResourcesForBuildingConstruction WarhouseConstruct  { get; private set; }
+        [field: SerializeField] public WarehouseResourcesForBuildingConstruction WarhouseConstruct  { get; private set; } //Test Vizialization
+
+        [field: SerializeField] public TextMeshProUGUI TimeCreateOneResourceT { get; private set; }
 
         public void Init()
         {
@@ -19,6 +22,7 @@ namespace Building
             GetPointResource.gameObject.SetActive(false);
             AddResourse.gameObject.SetActive(false);
             WarhouseConstruct = this.gameObject.AddComponent<WarehouseResourcesForBuildingConstruction>();
+            WarhouseConstruct.Init(TimeCreateOneResourceT);
         }
 
         public void EndCreatingFactory() 
@@ -30,7 +34,7 @@ namespace Building
             AddResourse.gameObject.SetActive(true);
         }
         
-        public void EndCreatingIcomeHouse()
+        public void EndCreatingIcomeBuildings()
         {
             if (WarhouseConstruct != null) Destroy(WarhouseConstruct);
 
