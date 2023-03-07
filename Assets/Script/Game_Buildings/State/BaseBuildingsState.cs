@@ -6,10 +6,9 @@ using UnityEngine;
 
 namespace Assets.Script.Game_Buildings.State
 {
-
-    public class BuildingsState : MonoBehaviour
+    public abstract class BaseBuildingsState<AddRes, GetRes> : MonoBehaviour
     {
-        private Dictionary<Type, StateBuilbing> behaviorMap;
+        private Dictionary<Type, StateBaseBuilbing> behaviorMap;
         private IBuildingState _ICurrentState;
         public DataBulding DataBuilding { get; private set; }
         private void Awake()
@@ -21,10 +20,12 @@ namespace Assets.Script.Game_Buildings.State
         private void InitBuildings()
         {
             //Прокидывания _dataBuilding не подходят
-            behaviorMap = new Dictionary<Type, StateBuilbing>();
-            behaviorMap[typeof(ConstructionBuilding<Log>)] = new ConstructionBuilding<Log>(DataBuilding);
-            behaviorMap[typeof(ConstructionBuilding<Log>)] = new ConstructionBuilding<Log>(DataBuilding);
-            behaviorMap[typeof(ConditionBuilding<MoneyObj>)] = new ConditionBuilding<MoneyObj>(DataBuilding);
+            behaviorMap = new Dictionary<Type, StateBaseBuilbing>();
+            behaviorMap[typeof(ConstructionBuilding<AddRes, GetRes>)] = new ConstructionBuilding<AddRes, GetRes>(DataBuilding, this);
+            behaviorMap[typeof(ConstructionBuilding<AddRes, GetRes>)] = new ConstructionBuilding<AddRes, GetRes>(DataBuilding, this);
+            behaviorMap[typeof(StateBuildingCreateRes<MoneyObj>)] = new StateBuildingCreateRes<MoneyObj>(DataBuilding); //Возможно заменить
+            behaviorMap[typeof(StateBuildingCreateRes<AddRes>)] = new StateBuildingCreateRes<AddRes, GetRes>(DataBuilding);
+            behaviorMap[typeof(StateBuildingCreateRes<GetRes>)] = new StateBuildingCreateRes<GetRes>(DataBuilding);
         }
 
         protected void SetBuilding(IBuildingState House)
@@ -42,24 +43,24 @@ namespace Assets.Script.Game_Buildings.State
             return behaviorMap[type];
         }
 
-        public void SetConstruct<T>()
+        public void SetConstruct()
         {
             DataBuilding.ConstructViewBuilding();
-            var behavior = GetBuilding<ConstructionBuilding<T>>();
+            var behavior = GetBuilding<ConstructionBuilding<AddRes, GetRes>>();
             SetBuilding(behavior);
         }
-
-        public void SetCreateRes<AddResource, GetResource>(Collider TriggerContact)
+       
+        public void SetCreateRes()
         {
             DataBuilding.EndViewFactory();
-            var behavior = GetBuilding<ConditionBuilding<AddResource, GetResource>>();
+            var behavior = GetBuilding<StateBuildingCreateRes<AddRes, GetRes>>();
             SetBuilding(behavior);
         }
 
-        public void SetCreateResNoAddResource<GetResource>()
+        public void SetCreateResNoAddResource()
         {
             DataBuilding.EndViewCreatingIcomeBuildings();
-            var behavior = GetBuilding<ConditionBuilding<GetResource>>();
+            var behavior = GetBuilding<StateBuildingCreateRes<GetRes>>();
             SetBuilding(behavior);
         }
     }

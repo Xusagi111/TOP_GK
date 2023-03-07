@@ -1,41 +1,51 @@
 ﻿using Building;
-using System.Collections;
+using UniRx.Triggers;
+using UniRx;
 
 namespace Assets.Script.Game_Buildings.State
 {
-    public class ConstructionBuilding<T> : StateBuilbing
+    public class ConstructionBuilding<AddRes, GetRes> : StateBaseBuilbing
     {
-        private DataBulding _dataBulding;
+        private BaseBuildingsState<AddRes, GetRes> _baseBuildingsState;
 
-
-        //Убрать от сюда new InventoryContact()
-        public ConstructionBuilding(DataBulding dataBulding)
+        public ConstructionBuilding(DataBulding dataBulding, BaseBuildingsState<AddRes, GetRes> baseBuildingsState)
         {
-            _dataBulding = dataBulding;
-      
-            CurrentTypeRes = GetTypeBuilding.GetTypeRes(typeof(T));
-            BaseWarehouse = new ResourceWarhouse(CurrentTypeRes, new InventoryContact(), _dataBulding.ConstructionBulding.transform);
+            DataBulding = dataBulding;
+            this._baseBuildingsState = baseBuildingsState;
+            BaseWarehouse = new ResourceWarhouse(GetTypeBuilding.GetTypeRes(typeof(AddRes)), DataBulding.ConstructionBulding.transform);
         }
 
         public override void Enter()
         {
-            _dataBulding.ConstructViewBuilding();
+            DataBulding.ConstructViewBuilding();
             IsUpdateTike = true;
-            //подписать на событие получения рес   _dataBulding.ConstructionBulding. 
+
+            DataBulding.ConstructionBulding.OnTriggerEnterAsObservable()
+               .Subscribe(collider => InventoryContact.AddCoCollizionRes(collider.gameObject, BaseWarehouse, DataBulding.ConstructionBulding.transform))
+               .AddTo(Disposable);
         }
 
         public override void Exit()
         {
-            _dataBulding.DisableView();
+            DataBulding.DisableView();
             IsUpdateTike = false;
-            //отписать от события  _dataBulding.ConstructionBulding. 
         }
+
         public override void FixedTick()
         {
             if (IsUpdateTike == false) return;
             if (BaseWarehouse.AllGameObj.Count >= BaseWarehouse.MaxElement)
             {
-                //Cмена состояния, сделать через UNIRX
+                IsUpdateTike = false;
+                switch (DataBulding.SwitchingStateConst)
+                {
+                    case StateEnem.CreateOneRes:
+                        _baseBuildingsState.SetCreateResNoAddResource();
+                        break;
+                    case StateEnem.GetAndCreateRes:
+                        _baseBuildingsState.SetCreateRes();
+                        break;
+                }
             }
         }
     }

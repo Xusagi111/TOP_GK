@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 5458390369527880206}
   - component: {fileID: 5458390369527880205}
   - component: {fileID: 5458390369527880204}
-  - component: {fileID: 6051516162674508925}
+  - component: {fileID: 1759156557166788747}
   - component: {fileID: 5458390369527880200}
+  - component: {fileID: 3844516922590237456}
   m_Layer: 0
-  m_Name: House 2_Icome
+  m_Name: House_Icome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +104,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6051516162674508925
+--- !u!114 &1759156557166788747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,7 +113,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5458390369527880195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bf1bf72a3af5354f939c61c2749c8ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 83796f814ac0908429bee0ef73913e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5458390369527880200
@@ -131,6 +132,19 @@ MonoBehaviour:
   <GetRes>k__BackingField: {fileID: 5458390371103119993}
   <AddRes>k__BackingField: {fileID: 5458390371028811415}
   <TimeCreateOneResourceT>k__BackingField: {fileID: 5476499891453844511}
+  <SwitchingStateConst>k__BackingField: 0
+--- !u!114 &3844516922590237456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458390369527880195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 460ceeb47c4496649ad61eada236b827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5458390371028811412
 GameObject:
   m_ObjectHideFlags: 0

@@ -600,13 +600,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee79e8c740c4c3c48ac3af6a38a498b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  House1: {fileID: 5609919509616614071, guid: d8874fc2346eb3e48a5c64d9dffee2ad, type: 3}
+  House1: {fileID: 2693225592747725521, guid: d8874fc2346eb3e48a5c64d9dffee2ad, type: 3}
   House2: {fileID: 6051516162674508925, guid: 2146de5b8290309459cef0091d6ba33a, type: 3}
   MoneyPrefab: {fileID: 468342483624453904, guid: 33b79cb8af0f46e4f9b7247dd84796c5,
     type: 3}
   PrefabCreateLogRes: {fileID: 414572084046413202, guid: 9bcbe9cac3bfda94ea83b511e8bbb7e3,
     type: 3}
   AllInstanceResource:
+  - {fileID: 414572084046413202, guid: 9bcbe9cac3bfda94ea83b511e8bbb7e3, type: 3}
   - {fileID: 8304571257864045114, guid: ccf27fb3b28c25a4aa80cf3f18cfea1d, type: 3}
 --- !u!1 &1920507210
 GameObject:

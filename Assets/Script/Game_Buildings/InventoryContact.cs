@@ -1,4 +1,5 @@
-﻿using Assets.Script.Player;
+﻿using Assets.Script;
+using Assets.Script.Player;
 using Assets.Script.Player.Interfaces;
 using Resource;
 using System.Collections;
@@ -7,14 +8,15 @@ using UnityEngine;
 
 namespace Building
 {
-    public class InventoryContact
+    public static class InventoryContact
     {
-        public IEnumerator GetResourceInventoryToCreateProduct(ResourceWarhouse Warehouse, List<BaseResource> Inventory, Transform EndMovePosition)
+        public static IEnumerator GetResourceInventoryToCreateProduct(ResourceWarhouse Warehouse, Inventory inventory, Transform EndMovePosition)
         {
+            var AllPlayerRes = inventory.AllResoursePlayer;
             List <BaseResource> AllResource = new List<BaseResource>();
             var CountAllElement = Warehouse.AllGameObj.Count;
 
-            foreach (var item in Inventory)
+            foreach (var item in AllPlayerRes)
             {
                 if (CountAllElement < Warehouse.MaxElement)
                 {
@@ -30,11 +32,11 @@ namespace Building
             int CountAllResourceInt = AllResource.Count;
             for (int i = 0; i < CountAllResourceInt; i++)
             {
-               yield return MoveAnimationObj(AllResource, Warehouse, EndMovePosition, Inventory);
+               yield return MoveAnimationObj(AllResource, Warehouse, EndMovePosition, inventory);
             }
         }
 
-        public IEnumerator GetAllResource(ResourceWarhouse Warehouse, Inventory Inventory, Transform EndMovePosition)
+        public static IEnumerator GetAllResource(ResourceWarhouse Warehouse, Inventory Inventory, Transform EndMovePosition)
         {
             List<BaseResource> AllResource = new List<BaseResource>();
 
@@ -51,7 +53,7 @@ namespace Building
         }
 
 
-        public float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, List<BaseResource> Inventory)
+        public static float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, List<BaseResource> Inventory)
         {
             if (EndINventory == null) { Debug.LogError("Inventory Null"); return 0; }
             if (EndINventory.MaxElement < EndINventory.AllGameObj.Count + 1) return 0;
@@ -67,7 +69,7 @@ namespace Building
             return Global.s_TimeMoveResourse;
         }
 
-        public float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, Inventory Inventory)
+        public static float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, Inventory Inventory)
         {
             if (EndINventory == null) { Debug.LogError("Inventory Null"); return 0; }
             if (Inventory.MaxCountElement < Inventory.AllResoursePlayer.Count + 1) return 0;
@@ -96,6 +98,20 @@ namespace Building
                 inventory.AllResoursePlayer == null ||
                 inventory.AllResoursePlayer.Count == 0) { Debug.LogError("Ошибка у игрока не найден инвентарь"); return true; }
             else return false;
+        }
+
+        public static void AddCoCollizionRes(GameObject Player, ResourceWarhouse baseWarehouse, Transform transform)
+        {
+            var InventoryPlayer = InventoryContact.GetInventoryUser(Player);
+            if (InventoryContact.CheckingNullPlayerINventory(InventoryPlayer)) return;
+            Coroutines.StartRoutine(InventoryContact.GetResourceInventoryToCreateProduct(baseWarehouse, InventoryPlayer, transform));
+        }
+
+        public static void GetCollizionRes(GameObject Player, ResourceWarhouse baseWarehouse, Transform transform)
+        {
+            var InventoryPlayer = InventoryContact.GetInventoryUser(Player);
+            if (InventoryContact.CheckingNullPlayerINventory(InventoryPlayer)) return;
+            Coroutines.StartRoutine(InventoryContact.GetAllResource(baseWarehouse, InventoryPlayer, transform));
         }
     }
 }

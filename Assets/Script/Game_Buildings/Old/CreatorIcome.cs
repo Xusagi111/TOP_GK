@@ -13,8 +13,6 @@ namespace Building
         private float _timerCreateR = 3;
         private bool _isInit = false;
 
-        public InventoryContact LogicContact;
-
         private BaseResource _createResource;
  
         //public void Init(float CountTimeCreateOneResource, Transform EndMovePositionResource, BaseResource InstanceCreateResource, ResourceWarhouse resourceWarhouse, TextMeshProUGUI CreateTimeOneRes)

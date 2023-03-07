@@ -64,20 +64,5 @@ namespace Building
         }
     }
 
-    [System.Serializable]
-    public class ResourceWarhouse 
-    {
-        public int MaxElement = 10;
-        public List<BaseResource> AllGameObj = new List<BaseResource>();
-        public EnumResource TypeRes { get; private set; }
-        public InventoryContact InventoryContact;
-        public Transform EndMovePositionResource;
 
-        public ResourceWarhouse(EnumResource TypeRes, InventoryContact InventoryContact, Transform EndMovePositionResource)
-        {
-            this.TypeRes = TypeRes;
-            this.InventoryContact = InventoryContact;
-            this.EndMovePositionResource = EndMovePositionResource;
-        }
-    }
 }

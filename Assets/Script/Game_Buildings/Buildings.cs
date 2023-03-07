@@ -1,4 +1,4 @@
-using Assets.Script.Game_Buildings.State;
+using Assets.Script.Game_Buildings.State.NewState;
 using Resource;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +10,8 @@ namespace Building
     {
         public static Buildings instance;
 
-        public BuildingsState House1;
-        public BuildingsState House2;
+        public BuildingsStateLog House1;
+        public BuildingsStateBoard House2;
 
         public MoneyObj MoneyPrefab;
         public BaseResource PrefabCreateLogRes;

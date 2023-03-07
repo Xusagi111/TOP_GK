@@ -1,18 +1,23 @@
-﻿using Building;
+﻿using Assets.Script.Player.Interfaces;
+using Building;
 using Resource;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Script.Game_Buildings.State
 {
-    public abstract class StateBuilbing : IBuildingState, IFixedTickable
+    [System.Serializable]
+    public abstract class StateBaseBuilbing : IBuildingState, IFixedTickable
     {
         protected EnumResource CurrentTypeRes = EnumResource.NullType;
-        [field: SerializeField] public TextMeshProUGUI TimeCreateOneResourceT { get; private set; } //Заинжектить данный тип 
+        [field: SerializeField] public ResourceWarhouse BaseWarehouse;
         protected bool IsUpdateTike = false;
-        protected ResourceWarhouse BaseWarehouse;
         protected DataBulding DataBulding;
+        protected CompositeDisposable Disposable = new CompositeDisposable();
+        protected Inventory IInventoryPlayer;
+    
 
         public virtual void Enter()
         {

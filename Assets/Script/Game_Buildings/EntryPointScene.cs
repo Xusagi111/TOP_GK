@@ -6,16 +6,15 @@ using Zenject;
 
 namespace Building
 {
-    public class TestCreateHouse : MonoBehaviour
+    public class EntryPointScene : MonoBehaviour
     {
-        
         private void Start()
         {
             //Создание игрока
             CreatePlayer();
             //Заменить на точки которые должны инжектиться.
             var StateBuildingHouse1 = Instantiate(Buildings.instance.House1, Vector3.zero, Quaternion.identity);
-            StateBuildingHouse1.SetConstruct<Log>();
+            StateBuildingHouse1.SetConstruct();
             //Создание здания
             //CreateHouseFactory(Buildings.instance.House1, EnumResource.Log, EnumResource.Log, EnumResource.Board);
             ////Создания здания который производит конкретный рессурс
@@ -97,20 +96,27 @@ namespace Building
 
         private void CreatePlayerRes(Inventory InvenoryPlayer)
         {
+            var BuildingsIns = Buildings.instance;
+            BaseResource PrefabLogRes = null;
+            BaseResource PrefabBoardRes = null;
+            foreach (var item in BuildingsIns.AllInstanceResource)
+            {
+                if (item.TypeRes == EnumResource.Log) PrefabLogRes = item;
+                if (item.TypeRes == EnumResource.Board) PrefabBoardRes = item;
+            }
+
             for (int i = 0; i < 30; i++)
             {
-                GameObject NewGameOj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                NewGameOj.transform.position = new Vector3(15, 0.5f);
-                NewGameOj.name = "Log";
-                InvenoryPlayer.AllResoursePlayer.Add(NewGameOj.AddComponent<Log>());
+                var BaseRes = Instantiate(PrefabLogRes, new Vector3(15, 0.5f,1f), Quaternion.identity);
+                BaseRes.name = "Log";
+                InvenoryPlayer.AllResoursePlayer.Add(BaseRes);
             }
 
             for (int i = 0; i < 5; i++)
             {
-                GameObject NewGameOj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                NewGameOj.transform.position = new Vector3(15, 0.5f);
-                NewGameOj.name = "Board";
-                InvenoryPlayer.AllResoursePlayer.Add(NewGameOj.AddComponent<Board>());
+                var BaseRes = Instantiate(PrefabBoardRes, new Vector3(15, 0.5f, 1f), Quaternion.identity);
+                BaseRes.name = "Board";
+                InvenoryPlayer.AllResoursePlayer.Add(BaseRes);
             }
         }
     }

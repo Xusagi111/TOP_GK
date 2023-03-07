@@ -1,25 +1,15 @@
-﻿using Building;
+﻿using Assets.Script.Player.Interfaces;
+using Building;
 using Resource;
 using System.Collections;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace Assets.Script.Game_Buildings.State
 {
-    public class ConditionBuilding<GetResource> : StateBuilbing
-    {
-        protected EnumResource CurrentGetTypeRes;
-        private Collider _triggerContact;
-        protected BaseWarehouse GetRes;
-
-
-        public ConditionBuilding(DataBulding dataBulding)
-        {
-            CurrentGetTypeRes = GetTypeBuilding.GetTypeRes(typeof(GetResource));
-            dataBulding.EndViewCreatingIcomeBuildings(); //Возможно перемещение в  Enter and Exit
-        }
-    }
-
-    public class ConditionBuilding<AddResource, GetResource> : StateBuilbing
+    [System.Serializable]
+    public class StateBuildingCreateRes<AddResource, GetResource> : StateBaseBuilbing
     {
         protected EnumResource CurrentGetTypeRes;
         private Collider _addResTrigger;
@@ -28,7 +18,7 @@ namespace Assets.Script.Game_Buildings.State
         protected BaseWarehouse GetRes;
         private IEnumerator _updateTimeCreateR;
 
-        public ConditionBuilding(DataBulding dataBulding)
+        public StateBuildingCreateRes(DataBulding dataBulding)
         {
             CurrentTypeRes = GetTypeBuilding.GetTypeRes(typeof(AddResource));
             CurrentGetTypeRes = GetTypeBuilding.GetTypeRes(typeof(GetResource));
@@ -41,24 +31,28 @@ namespace Assets.Script.Game_Buildings.State
             DataBulding.EndViewFactory();
             IsUpdateTike = true;
 
-            //подписать на событие получения рес   _dataBulding.ConstructionBulding. 
+            _addResTrigger.OnTriggerEnterAsObservable()
+               .Subscribe(collider => InventoryContact.AddCoCollizionRes(collider.gameObject, BaseWarehouse, _addResTrigger.transform))
+               .AddTo(Disposable);
+
+            _getResTrigger.OnTriggerEnterAsObservable()
+            .Subscribe(collider => InventoryContact.GetCollizionRes(collider.gameObject, GetRes.AllResorce, _getResTrigger.transform))
+            .AddTo(Disposable);
         }
 
         public override void Exit()
         {
             DataBulding.DisableView();
             IsUpdateTike = false;
-
-            //отписать от события  _dataBulding.ConstructionBulding. 
         }
 
         public override void FixedTick()
         {
             if (IsUpdateTike == false) return;
 
-            if (_updateTimeCreateR == null && 
+            if (_updateTimeCreateR == null &&
                 BaseWarehouse.AllGameObj.Count > 1 &&
-                GetRes.AllResorce.MaxElement > BaseWarehouse .AllGameObj.Count)
+                GetRes.AllResorce.MaxElement > BaseWarehouse.AllGameObj.Count)
             {
                 CreateRes();
             }
@@ -66,7 +60,7 @@ namespace Assets.Script.Game_Buildings.State
 
         public void CreateRes()
         {
-            _updateTimeCreateR = UpdateTimeCreateR.UpdateTime(BaseWarehouse, GetRes.AllResorce.AllGameObj, BaseWarehouse.TypeRes, TimeCreateOneElement, TimeCreateOneResourceT);
+            _updateTimeCreateR = UpdateTimeCreateR.UpdateTime(BaseWarehouse, GetRes.AllResorce.AllGameObj, BaseWarehouse.TypeRes, TimeCreateOneElement, DataBulding.TimeCreateOneResourceT);
             Coroutines.instance.StartCoroutine(_updateTimeCreateR);
         }
     }
