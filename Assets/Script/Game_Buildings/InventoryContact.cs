@@ -1,4 +1,5 @@
-﻿using Assets.Script.Player.Interfaces;
+﻿using Assets.Script.Player;
+using Assets.Script.Player.Interfaces;
 using Resource;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace Building
 {
-    public class InventoryContact : MonoBehaviour
+    public class InventoryContact
     {
         public IEnumerator GetResourceInventoryToCreateProduct(ResourceWarhouse Warehouse, List<BaseResource> Inventory, Transform EndMovePosition)
         {
@@ -80,6 +81,21 @@ namespace Building
             EndINventory.AllGameObj.Remove(DelResource);
 
             return Global.s_TimeMoveResourse;
+        }
+
+        public static Inventory GetInventoryUser(GameObject CheckingInventory)
+        {
+            var PLayerInventory = CheckingInventory.GetComponent<TestPlayerInventory>();
+            if (PLayerInventory == null) return null;
+            else return PLayerInventory;
+        }
+
+        public static bool CheckingNullPlayerINventory(Inventory inventory)
+        {
+            if (inventory == null ||
+                inventory.AllResoursePlayer == null ||
+                inventory.AllResoursePlayer.Count == 0) { Debug.LogError("Ошибка у игрока не найден инвентарь"); return true; }
+            else return false;
         }
     }
 }

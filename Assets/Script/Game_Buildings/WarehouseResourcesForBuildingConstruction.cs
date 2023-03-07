@@ -34,7 +34,7 @@ namespace Building
 
             var Inventory = PLayerInventory.AllResoursePlayer;
             var item = _allBaseRes.AllResorce;
-            _allBaseRes.InventoryContact.StartCoroutine(_allBaseRes.InventoryContact.GetResourceInventoryToCreateProduct(item, Inventory, _allBaseRes.EndMovePositionResource));
+            //_allBaseRes.InventoryContact.StartCoroutine(_allBaseRes.InventoryContact.GetResourceInventoryToCreateProduct(item, Inventory, _allBaseRes.EndMovePositionResource));
         }
 
         private void FixedUpdate()
@@ -53,7 +53,6 @@ namespace Building
 
         private void OnDestroy()
         {
-            Destroy(_allBaseRes.InventoryContact);
             foreach (var item in _allBaseRes.AllResorce.AllGameObj) Destroy(item.gameObject);
             EventFullingResource.RemoveAllListeners();
         }

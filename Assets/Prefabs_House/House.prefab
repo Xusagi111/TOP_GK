@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4097208434859142162}
   - component: {fileID: 4097208434859142161}
   - component: {fileID: 4097208434859142160}
+  - component: {fileID: 5609919509616614071}
   - component: {fileID: 4097208434859142164}
   m_Layer: 0
   m_Name: House
@@ -102,6 +103,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5609919509616614071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4097208434859142175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf1bf72a3af5354f939c61c2749c8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4097208434859142164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,12 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77082d6daa6b1b040b0d998d0660678f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ConstructionBulding>k__BackingField: {fileID: 4097208436259659675}
-  <GetPointResource>k__BackingField: {fileID: 4097208436505160804}
-  <AddResourse>k__BackingField: {fileID: 4097208436579207306}
-  <FinalView>k__BackingField: {fileID: 0}
-  <TimeCreatingSingleUnit>k__BackingField: 0.3
-  <WarhouseConstruct>k__BackingField: {fileID: 0}
+  <ConstructionBulding>k__BackingField: {fileID: 4097208436259659672}
+  <GetRes>k__BackingField: {fileID: 4097208436505160805}
+  <AddRes>k__BackingField: {fileID: 4097208436579207307}
   <TimeCreateOneResourceT>k__BackingField: {fileID: 1460754890218142066}
 --- !u!1 &4097208436259659750
 GameObject:

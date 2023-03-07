@@ -588,9 +588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b896638452533984eac54ebde6b00710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <_onePointCreateBuilding>k__BackingField: {fileID: 924895942}
-  <_twoPointCreateBuilding>k__BackingField: {fileID: 327373204}
-  <_threePointCreateBuilding>k__BackingField: {fileID: 940286403}
 --- !u!114 &1600218038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,8 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee79e8c740c4c3c48ac3af6a38a498b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  House1: {fileID: 4097208434859142164, guid: d8874fc2346eb3e48a5c64d9dffee2ad, type: 3}
-  House2: {fileID: 5458390369527880200, guid: 2146de5b8290309459cef0091d6ba33a, type: 3}
+  House1: {fileID: 5609919509616614071, guid: d8874fc2346eb3e48a5c64d9dffee2ad, type: 3}
+  House2: {fileID: 6051516162674508925, guid: 2146de5b8290309459cef0091d6ba33a, type: 3}
   MoneyPrefab: {fileID: 468342483624453904, guid: 33b79cb8af0f46e4f9b7247dd84796c5,
     type: 3}
   PrefabCreateLogRes: {fileID: 414572084046413202, guid: 9bcbe9cac3bfda94ea83b511e8bbb7e3,

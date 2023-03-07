@@ -11,9 +11,10 @@ namespace Assets.Script.Game_Buildings.State
     {
         private Dictionary<Type, StateBuilbing> behaviorMap;
         private IBuildingState _ICurrentState;
-        [field: SerializeField] private DataBulding _dataBuilding;
+        public DataBulding DataBuilding { get; private set; }
         private void Awake()
         {
+            DataBuilding = GetComponent<DataBulding>();
             InitBuildings();
         }
 
@@ -21,9 +22,9 @@ namespace Assets.Script.Game_Buildings.State
         {
             //Прокидывания _dataBuilding не подходят
             behaviorMap = new Dictionary<Type, StateBuilbing>();
-            behaviorMap[typeof(ConstructionBuilding<Log>)] = new ConstructionBuilding<Log>(_dataBuilding);
-            behaviorMap[typeof(ConstructionBuilding<Log>)] = new ConstructionBuilding<Log>(_dataBuilding);
-            behaviorMap[typeof(ConditionBuilding<MoneyObj>)] = new ConditionBuilding<MoneyObj>(_dataBuilding);
+            behaviorMap[typeof(ConstructionBuilding<Log>)] = new ConstructionBuilding<Log>(DataBuilding);
+            behaviorMap[typeof(ConstructionBuilding<Log>)] = new ConstructionBuilding<Log>(DataBuilding);
+            behaviorMap[typeof(ConditionBuilding<MoneyObj>)] = new ConditionBuilding<MoneyObj>(DataBuilding);
         }
 
         protected void SetBuilding(IBuildingState House)
@@ -41,23 +42,23 @@ namespace Assets.Script.Game_Buildings.State
             return behaviorMap[type];
         }
 
-        protected void SetConstruct<T>()
+        public void SetConstruct<T>()
         {
-            _dataBuilding.ConstructViewBuilding();
+            DataBuilding.ConstructViewBuilding();
             var behavior = GetBuilding<ConstructionBuilding<T>>();
             SetBuilding(behavior);
         }
 
-        protected void SetCreateRes<AddResource, GetResource>(Collider TriggerContact)
+        public void SetCreateRes<AddResource, GetResource>(Collider TriggerContact)
         {
-            _dataBuilding.EndViewFactory();
+            DataBuilding.EndViewFactory();
             var behavior = GetBuilding<ConditionBuilding<AddResource, GetResource>>();
             SetBuilding(behavior);
         }
 
-        protected void SetCreateResNoAddResource<GetResource>()
+        public void SetCreateResNoAddResource<GetResource>()
         {
-            _dataBuilding.EndViewCreatingIcomeBuildings();
+            DataBuilding.EndViewCreatingIcomeBuildings();
             var behavior = GetBuilding<ConditionBuilding<GetResource>>();
             SetBuilding(behavior);
         }

@@ -17,19 +17,19 @@ namespace Building
 
         private BaseResource _createResource;
  
-        public void Init(float CountTimeCreateOneResource, Transform EndMovePositionResource, BaseResource InstanceCreateResource, ResourceWarhouse resourceWarhouse, TextMeshProUGUI CreateTimeOneRes)
-        {
-            _timeOneCreateR = CountTimeCreateOneResource;
-            _createResource = InstanceCreateResource;
+        //public void Init(float CountTimeCreateOneResource, Transform EndMovePositionResource, BaseResource InstanceCreateResource, ResourceWarhouse resourceWarhouse, TextMeshProUGUI CreateTimeOneRes)
+        //{
+        //    _timeOneCreateR = CountTimeCreateOneResource;
+        //    _createResource = InstanceCreateResource;
 
-            LogicContact = this.gameObject.AddComponent<InventoryContact>();
-            GetResource = this.gameObject.AddComponent<CreateResource>();
+        //    LogicContact = this.gameObject.AddComponent<InventoryContact>();
+        //    GetResource = this.gameObject.AddComponent<CreateResource>();
 
-            GetResource.Init(EndMovePositionResource, resourceWarhouse);
-            _isInit = true;
-            CreateTimeRes = CreateTimeOneRes;
-            _timeOneCreateR = _timerCreateR;
-        }
+        //    GetResource.Init(EndMovePositionResource, resourceWarhouse);
+        //    _isInit = true;
+        //    CreateTimeRes = CreateTimeOneRes;
+        //    _timeOneCreateR = _timerCreateR;
+        //}
 
         private void Update()
         {
@@ -48,29 +48,29 @@ namespace Building
                 if (_timeOneCreateR <= 0)
                 {
                     _timeOneCreateR = _timerCreateR;
-                    CreateR();
+                    //CreateR();
                 }
             }
             else if(isCreateR == false) CreateTimeRes.text = "Max Element";
         }
 
-        public void GetContactResource(GameObject CheckingInventory)
-        {
-            Debug.LogWarning("GetContactResource");
-            var Inventory = GetInventory.GetInventoryUser(CheckingInventory);
-            if (GetInventory.CheckingNullPlayerINventory(Inventory)) return;
+        //public void GetContactResource(GameObject CheckingInventory)
+        //{
+        //    Debug.LogWarning("GetContactResource");
+        //    var Inventory = GetInventory.GetInventoryUser(CheckingInventory);
+        //    if (GetInventory.CheckingNullPlayerINventory(Inventory)) return;
 
-            var item = GetResource.AllResorce;
-            if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
-            {
-                StartCoroutine(GetResource.InventoryContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
-            }
-        }
+        //    var item = GetResource.AllResorce;
+        //    if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
+        //    {
+        //        StartCoroutine(GetResource.InventoryContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
+        //    }
+        //}
       
-        private void CreateR()
-        {
-            GetResource.AllResorce.AllGameObj.Add(Instantiate(_createResource, GetResource.EndMovePositionResource.position, Quaternion.identity, GetResource.EndMovePositionResource.transform));
-        }
+        //private void CreateR()
+        //{
+        //    GetResource.AllResorce.AllGameObj.Add(Instantiate(_createResource, GetResource.EndMovePositionResource.position, Quaternion.identity, GetResource.EndMovePositionResource.transform));
+        //}
     
     }
 }

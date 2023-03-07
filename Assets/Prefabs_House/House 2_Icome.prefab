@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5458390369527880206}
   - component: {fileID: 5458390369527880205}
   - component: {fileID: 5458390369527880204}
+  - component: {fileID: 6051516162674508925}
   - component: {fileID: 5458390369527880200}
   m_Layer: 0
   m_Name: House 2_Icome
@@ -102,6 +103,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6051516162674508925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458390369527880195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf1bf72a3af5354f939c61c2749c8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5458390369527880200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,12 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77082d6daa6b1b040b0d998d0660678f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ConstructionBulding>k__BackingField: {fileID: 5458390371360942471}
-  <GetPointResource>k__BackingField: {fileID: 5458390371103119992}
-  <AddResourse>k__BackingField: {fileID: 5458390371028811414}
-  <FinalView>k__BackingField: {fileID: 0}
-  <TimeCreatingSingleUnit>k__BackingField: 0.3
-  <WarhouseConstruct>k__BackingField: {fileID: 0}
+  <ConstructionBulding>k__BackingField: {fileID: 5458390371360942468}
+  <GetRes>k__BackingField: {fileID: 5458390371103119993}
+  <AddRes>k__BackingField: {fileID: 5458390371028811415}
   <TimeCreateOneResourceT>k__BackingField: {fileID: 5476499891453844511}
 --- !u!1 &5458390371028811412
 GameObject:
@@ -140,7 +150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5458390371028811413
 Transform:
   m_ObjectHideFlags: 0
@@ -250,7 +260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5458390371103119999
 Transform:
   m_ObjectHideFlags: 0
@@ -360,7 +370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5458390371360942587
 Transform:
   m_ObjectHideFlags: 0

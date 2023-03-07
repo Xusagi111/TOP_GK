@@ -1,17 +1,17 @@
-using Assets.Script.Resourse;
+using Assets.Script.Game_Buildings.State;
 using Resource;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Building
 {
-    //Хранилище пребафов
+    //Заинжектить
     public class Buildings : MonoBehaviour
     {
         public static Buildings instance;
 
-        public DataBulding House1;
-        public DataBulding House2;
+        public BuildingsState House1;
+        public BuildingsState House2;
 
         public MoneyObj MoneyPrefab;
         public BaseResource PrefabCreateLogRes;

@@ -52,7 +52,7 @@ namespace Assets.Script.Game_Buildings.State
             //отписать от события  _dataBulding.ConstructionBulding. 
         }
 
-        public override void Tick()
+        public override void FixedTick()
         {
             if (IsUpdateTike == false) return;
 

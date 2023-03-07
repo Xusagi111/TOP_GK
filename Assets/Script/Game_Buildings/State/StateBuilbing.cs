@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Assets.Script.Game_Buildings.State
 {
-    public abstract class StateBuilbing : IBuildingState, ITickable
+    public abstract class StateBuilbing : IBuildingState, IFixedTickable
     {
         protected EnumResource CurrentTypeRes = EnumResource.NullType;
         [field: SerializeField] public TextMeshProUGUI TimeCreateOneResourceT { get; private set; } //Заинжектить данный тип 
@@ -24,7 +24,7 @@ namespace Assets.Script.Game_Buildings.State
             //Дестроить тип
         }
 
-        public virtual void Tick()
+        public virtual void FixedTick()
         {
             //Обновления
         }
