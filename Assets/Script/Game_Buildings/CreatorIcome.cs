@@ -63,7 +63,7 @@ namespace Building
             var item = GetResource.AllResorce;
             if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
             {
-                StartCoroutine(GetResource.LogicContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
+                StartCoroutine(GetResource.InventoryContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
             }
         }
       

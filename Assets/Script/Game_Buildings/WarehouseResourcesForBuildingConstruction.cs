@@ -34,7 +34,7 @@ namespace Building
 
             var Inventory = PLayerInventory.AllResoursePlayer;
             var item = _allBaseRes.AllResorce;
-            _allBaseRes.LogicContact.StartCoroutine(_allBaseRes.LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, _allBaseRes.EndMovePositionResource));
+            _allBaseRes.InventoryContact.StartCoroutine(_allBaseRes.InventoryContact.GetResourceInventoryToCreateProduct(item, Inventory, _allBaseRes.EndMovePositionResource));
         }
 
         private void FixedUpdate()
@@ -53,7 +53,7 @@ namespace Building
 
         private void OnDestroy()
         {
-            Destroy(_allBaseRes.LogicContact);
+            Destroy(_allBaseRes.InventoryContact);
             foreach (var item in _allBaseRes.AllResorce.AllGameObj) Destroy(item.gameObject);
             EventFullingResource.RemoveAllListeners();
         }
@@ -71,10 +71,14 @@ namespace Building
         public int MaxElement = 10;
         public List<BaseResource> AllGameObj = new List<BaseResource>();
         public EnumResource TypeRes { get; private set; }
+        public InventoryContact InventoryContact;
+        public Transform EndMovePositionResource;
 
-        public ResourceWarhouse(EnumResource TypeRes)
+        public ResourceWarhouse(EnumResource TypeRes, InventoryContact InventoryContact, Transform EndMovePositionResource)
         {
-           this.TypeRes = TypeRes;
+            this.TypeRes = TypeRes;
+            this.InventoryContact = InventoryContact;
+            this.EndMovePositionResource = EndMovePositionResource;
         }
     }
 }

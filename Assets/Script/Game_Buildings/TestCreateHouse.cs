@@ -8,9 +8,7 @@ namespace Building
 {
     public class TestCreateHouse : MonoBehaviour
     {
-        [field:SerializeField] private Transform _onePointCreateBuilding { get; set; }
-        [field:SerializeField] private Transform _twoPointCreateBuilding { get; set; }
-        [field:SerializeField] private Transform _threePointCreateBuilding { get; set; }
+    
 
         public void CreateFactory()
         {
@@ -33,7 +31,7 @@ namespace Building
         private void CreateHouseFactory(DataBulding instanceHouse, EnumResource AddConstructR, EnumResource AddCreateR, EnumResource GetCreateR)
         {
             var NewHouse = Instantiate(instanceHouse, _onePointCreateBuilding.position, Quaternion.identity);
-            NewHouse.ConstructBuilding();
+            NewHouse.ConstructViewBuilding();
           
             var Resource = new ResourceWarhouse(AddConstructR);
             var WarHouse = NewHouse.WarhouseConstruct;
@@ -63,7 +61,7 @@ namespace Building
         private void CreateBuoldingsIcomeResource(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource GetCreateR, EnumResource CreateR, Transform positionCreateHouse)
         {
             var NewHouse = Instantiate(instanceHouse, positionCreateHouse.position, Quaternion.identity);
-            NewHouse.ConstructBuilding();
+            NewHouse.ConstructViewBuilding();
           
             var Resource = new ResourceWarhouse(GetCreateR);
             var WarHouse = NewHouse.WarhouseConstruct;
@@ -77,7 +75,7 @@ namespace Building
         private void CreateBuildingsNoConstructRes(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource CreateR, Transform positionCreateHouse)
         {
             var NewHouse = Instantiate(instanceHouse, positionCreateHouse.position, Quaternion.identity);
-            NewHouse.EndCreatingIcomeBuildings();
+            NewHouse.EndViewCreatingIcomeBuildings();
             ModificalCreatorIcomeBuildings(NewHouse, NewHouse.GetRes, EndCreateR, CreateR);
         }
 

@@ -52,7 +52,7 @@ namespace Building
             var WarhouseR = AddResourceWarhouse.AllResorce;
             if (WarhouseR.AllGameObj.Count < WarhouseR.MaxElement)
             {
-                StartCoroutine(AddResourceWarhouse.LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, AddResourceWarhouse.EndMovePositionResource));
+                StartCoroutine(AddResourceWarhouse.InventoryContact.GetResourceInventoryToCreateProduct(item, Inventory, AddResourceWarhouse.EndMovePositionResource));
             }
         }
 
@@ -65,7 +65,7 @@ namespace Building
             var item = GetResource.AllResorce;
             if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
             {
-                StartCoroutine(GetResource.LogicContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
+                StartCoroutine(GetResource.InventoryContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
             }
         }
 
