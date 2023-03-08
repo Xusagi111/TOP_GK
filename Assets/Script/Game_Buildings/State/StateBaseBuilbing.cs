@@ -1,7 +1,6 @@
 ﻿using Assets.Script.Player.Interfaces;
 using Building;
 using Resource;
-using TMPro;
 using UniRx;
 using UnityEngine;
 using Zenject;

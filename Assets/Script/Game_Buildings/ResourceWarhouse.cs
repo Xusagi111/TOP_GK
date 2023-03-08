@@ -9,8 +9,8 @@ namespace Building
     {
         public int MaxElement = 10;
         public List<BaseResource> AllGameObj = new List<BaseResource>();
-        public EnumResource TypeRes { get; private set; }
-        public Transform EndMovePositionResource;
+        public readonly EnumResource TypeRes;
+        public readonly Transform EndMovePositionResource;
 
         public ResourceWarhouse(EnumResource TypeRes, Transform EndMovePositionResource)
         {

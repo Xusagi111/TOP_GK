@@ -32,7 +32,7 @@ namespace Building
             int CountAllResourceInt = AllResource.Count;
             for (int i = 0; i < CountAllResourceInt; i++)
             {
-               yield return MoveAnimationObj(AllResource, Warehouse, EndMovePosition, inventory);
+               yield return MoveAnimationObj<Log>(AllResource, Warehouse, EndMovePosition, inventory);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Building
         }
 
 
-        public static float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, List<BaseResource> Inventory)
+        public static float MoveAnimationObj<T>(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, Inventory Inventory)
         {
             if (EndINventory == null) { Debug.LogError("Inventory Null"); return 0; }
             if (EndINventory.MaxElement < EndINventory.AllGameObj.Count + 1) return 0;
@@ -61,7 +61,7 @@ namespace Building
             var DelResource = Resource[0];
             DelResource.transform.position = EndPosition.position;
 
-            Inventory.Remove(DelResource);
+            Inventory.AllResoursePlayer.Remove(DelResource);
             Resource.Remove(DelResource);
 
             EndINventory.AllGameObj.Add(DelResource);
