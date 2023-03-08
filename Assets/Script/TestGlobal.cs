@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-public class Global : MonoBehaviour
+public class TestGlobal : MonoBehaviour
 {
-    public static float s_TimeMoveResourse = 2f;
-
+    public static float s_TimeMoveResourse = 1f;
     public float TimeMoveResourse;
 
     [ContextMenu("ChangesTime")]

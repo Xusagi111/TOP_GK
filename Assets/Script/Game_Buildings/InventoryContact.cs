@@ -32,7 +32,9 @@ namespace Building
             int CountAllResourceInt = AllResource.Count;
             for (int i = 0; i < CountAllResourceInt; i++)
             {
-               yield return MoveAnimationObj<Log>(AllResource, Warehouse, EndMovePosition, inventory);
+                //Cделать метод который будет отключать корутину при удалении игрока от места триггера.
+                float TimeUpdateFrame = MoveAnimationObj<Log>(AllResource, Warehouse, EndMovePosition, inventory);
+                yield return new WaitForSeconds(TimeUpdateFrame);
             }
         }
 
@@ -48,7 +50,8 @@ namespace Building
             int CountAllResourceInt = AllResource.Count;
             for (int i = 0; i < CountAllResourceInt; i++)
             {
-                yield return MoveAnimationObj(AllResource, Warehouse, EndMovePosition, Inventory);
+                float TimeUpdateFrame = MoveAnimationObj(AllResource, Warehouse, EndMovePosition, Inventory);
+                yield return new WaitForSeconds(TimeUpdateFrame);
             }
         }
 
@@ -66,7 +69,7 @@ namespace Building
 
             EndINventory.AllGameObj.Add(DelResource);
             
-            return Global.s_TimeMoveResourse;
+            return TestGlobal.s_TimeMoveResourse;
         }
 
         public static float MoveAnimationObj(List<BaseResource> Resource, ResourceWarhouse EndINventory, Transform EndPosition, Inventory Inventory)
@@ -82,7 +85,7 @@ namespace Building
             Resource.Remove(DelResource);
             EndINventory.AllGameObj.Remove(DelResource);
 
-            return Global.s_TimeMoveResourse;
+            return TestGlobal.s_TimeMoveResourse;
         }
 
         public static Inventory GetInventoryUser(GameObject CheckingInventory)
