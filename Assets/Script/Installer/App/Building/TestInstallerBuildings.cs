@@ -1,18 +1,19 @@
-﻿using UnityEngine;
+﻿using Assets.Script.Game_Buildings.State;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Script.Game_Buildings
 {
     public class TestInstallerBuildings : MonoInstaller
     {
-        [field: SerializeField] public Transform _onePointCreateBuilding { get; set; }
-        [field: SerializeField] private Transform _twoPointCreateBuilding { get; set; }
-        [field: SerializeField] private Transform _threePointCreateBuilding { get; set; }
+        [field: SerializeField] public Transform _onePointCreateBuilding;
+        [field: SerializeField] private Transform _twoPointCreateBuilding;
+        [field: SerializeField] private Transform _threePointCreateBuilding;
 
-        //Проверить на то, как работает
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<TestInstallerBuildings>().AsSingle();
+
         }
     }
 }

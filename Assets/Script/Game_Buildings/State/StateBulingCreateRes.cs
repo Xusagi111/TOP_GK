@@ -4,25 +4,33 @@ using System.Collections;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Script.Game_Buildings.State
 {
     [System.Serializable]
     public class StateBuildingCreateRes<AddResource, GetResource> : StateBaseBuilbing
     {
-        protected EnumResource CurrentGetTypeRes;
+        [field:SerializeField] protected EnumResource CurrentGetTypeRes;
         private Collider _addResTrigger;
         private Collider _getResTrigger;
         private float TimeCreateOneElement;
-        protected BaseWarehouse GetRes;
-        private IEnumerator _updateTimeCreateR;
+        [field: SerializeField] public ResourceWarhouse GetRes { get; protected set; }
+        private IEnumerator _updateTimeCreateRCor;
 
-        public StateBuildingCreateRes(DataBulding dataBulding)
+        private UpdateTimeCreateR _updateTimeCreateR;
+
+        public StateBuildingCreateRes(DataBulding dataBulding, UpdateTimeCreateR updateTimeCreateR)
         {
             CurrentTypeRes = GetTypeBuilding.GetTypeRes(typeof(AddResource));
             CurrentGetTypeRes = GetTypeBuilding.GetTypeRes(typeof(GetResource));
             _addResTrigger = dataBulding.AddRes;
             _getResTrigger = dataBulding.GetRes;
+            DataBulding = dataBulding;
+
+            GetRes = new ResourceWarhouse(CurrentGetTypeRes, _getResTrigger.transform);
+            BaseWarehouse = new ResourceWarhouse(CurrentTypeRes, _addResTrigger.transform);
+            _updateTimeCreateR = updateTimeCreateR;
         }
 
         public override void Enter()
@@ -35,7 +43,7 @@ namespace Assets.Script.Game_Buildings.State
                .AddTo(Disposable);
 
             _getResTrigger.OnTriggerEnterAsObservable()
-            .Subscribe(collider => InventoryContact.GetCollizionRes(collider.gameObject, GetRes.AllResorce, _getResTrigger.transform))
+            .Subscribe(collider => InventoryContact.GetCollizionRes(collider.gameObject, GetRes, _getResTrigger.transform))
             .AddTo(Disposable);
         }
 
@@ -45,13 +53,14 @@ namespace Assets.Script.Game_Buildings.State
             IsUpdateTike = false;
         }
 
-        public override void FixedTick()
+        public override void IUpdate()
         {
             if (IsUpdateTike == false) return;
 
-            if (_updateTimeCreateR == null &&
+            if (_updateTimeCreateRCor == null &&
                 BaseWarehouse.AllGameObj.Count > 1 &&
-                GetRes.AllResorce.MaxElement > BaseWarehouse.AllGameObj.Count)
+                GetRes.MaxElement > BaseWarehouse.AllGameObj.Count &&
+                _updateTimeCreateR != null) 
             {
                 CreateRes();
             }
@@ -59,9 +68,9 @@ namespace Assets.Script.Game_Buildings.State
 
         public void CreateRes()
         {
-            _updateTimeCreateR = UpdateTimeCreateR.UpdateTime(BaseWarehouse, GetRes.AllResorce.AllGameObj, BaseWarehouse.TypeRes,
+            _updateTimeCreateRCor = _updateTimeCreateR.UpdateTime(BaseWarehouse, GetRes.AllGameObj, BaseWarehouse.TypeRes,
                 TimeCreateOneElement, DataBulding.TimeCreateOneResourceT);
-            Coroutines.instance.StartCoroutine(_updateTimeCreateR);
+            Coroutines.instance.StartCoroutine(_updateTimeCreateRCor);
         }
     }
 }

@@ -4,12 +4,17 @@ using System.Collections;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Zenject;
+using ModestTree;
 
 namespace Assets.Script.Game_Buildings.State
 {
     [System.Serializable]
     public class StateBuildingCreateRes<GetResource> : StateBaseBuilbing
     {
+        [Inject]
+        private UpdateTimeCreateR _updateTimeRes;
+
         protected EnumResource CurrentGetTypeRes;
         protected BaseWarehouse GetRes;
         private float TimeCreateOneElement;
@@ -23,6 +28,16 @@ namespace Assets.Script.Game_Buildings.State
             _getResTrigger = dataBulding.GetRes;
         }
 
+        public void Initialize()
+        {
+            CheckInjection();     // проверка инжекции
+        }
+
+        private void CheckInjection()
+        {
+            Assert.IsNotNull(_updateTimeRes);
+        }
+
         public override void Enter()
         {
             DataBulding.EndViewFactory();
@@ -33,9 +48,10 @@ namespace Assets.Script.Game_Buildings.State
             .AddTo(Disposable);
         }
 
-        public override void FixedTick()
+        public override void IUpdate()
         {
             if (IsUpdateTike == false) return;
+
 
             if (_updateTimeCreateR == null &&
                 BaseWarehouse.AllGameObj.Count > 1 &&
@@ -47,7 +63,7 @@ namespace Assets.Script.Game_Buildings.State
 
         public void CreateRes()
         {
-            _updateTimeCreateR = UpdateTimeCreateR.UpdateTime(BaseWarehouse, GetRes.AllResorce.AllGameObj, 
+            _updateTimeCreateR = _updateTimeRes.UpdateTime(BaseWarehouse, GetRes.AllResorce.AllGameObj, 
                 BaseWarehouse.TypeRes, TimeCreateOneElement, DataBulding.TimeCreateOneResourceT);
             Coroutines.instance.StartCoroutine(_updateTimeCreateR);
         }

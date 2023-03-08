@@ -2,7 +2,7 @@
 
 namespace Building
 {
-    public abstract class  BaseWarehouse : MonoBehaviour
+    public class  BaseWarehouse : MonoBehaviour
     {
         [field: SerializeField] public ResourceWarhouse AllResorce { get; protected set; }
     }

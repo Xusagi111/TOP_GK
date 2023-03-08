@@ -1,6 +1,9 @@
-﻿using Assets.Script.Player;
+﻿using Assets.Script.Game_Buildings.State;
+using Assets.Script.Game_Buildings.State.NewState;
+using Assets.Script.Player;
 using Assets.Script.Player.Interfaces;
 using Resource;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -8,13 +11,29 @@ namespace Building
 {
     public class EntryPointScene : MonoBehaviour
     {
+        [Inject]
+        private List<BaseResource> AllTypeRes;
+
+        [Inject]
+        private BuildingsStateLog OneHouse;
+
+        [Inject]
+        public CreateR CreateR;
+        [Inject]
+        public UpdateTimeCreateR UpdateTimeCreateR;
+
+    
+
         private void Start()
         {
+           // OneHouse.SetConstruct();
             //Создание игрока
             CreatePlayer();
+            var CreateHouse = Instantiate(OneHouse, Vector3.zero, Quaternion.identity);
+            CreateHouse.SetConstruct();
             //Заменить на точки которые должны инжектиться.
-            var StateBuildingHouse1 = Instantiate(Buildings.instance.House1, Vector3.zero, Quaternion.identity);
-            StateBuildingHouse1.SetConstruct();
+
+
             //Создание здания
             //CreateHouseFactory(Buildings.instance.House1, EnumResource.Log, EnumResource.Log, EnumResource.Board);
             ////Создания здания который производит конкретный рессурс
@@ -96,10 +115,9 @@ namespace Building
 
         private void CreatePlayerRes(Inventory InvenoryPlayer)
         {
-            var BuildingsIns = Buildings.instance;
             BaseResource PrefabLogRes = null;
             BaseResource PrefabBoardRes = null;
-            foreach (var item in BuildingsIns.AllInstanceResource)
+            foreach (var item in AllTypeRes)
             {
                 if (item.TypeRes == EnumResource.Log) PrefabLogRes = item;
                 if (item.TypeRes == EnumResource.Board) PrefabBoardRes = item;
@@ -107,7 +125,7 @@ namespace Building
 
             for (int i = 0; i < 30; i++)
             {
-                var BaseRes = Instantiate(PrefabLogRes, new Vector3(15, 0.5f,1f), Quaternion.identity);
+                var BaseRes = Instantiate(PrefabLogRes, new Vector3(15, 0.5f, 1f), Quaternion.identity);
                 BaseRes.name = "Log";
                 InvenoryPlayer.AllResoursePlayer.Add(BaseRes);
             }

@@ -31,7 +31,7 @@ namespace Assets.Script.Game_Buildings.State
             IsUpdateTike = false;
         }
 
-        public override void FixedTick()
+        public override void IUpdate()
         {
             if (IsUpdateTike == false) return;
             if (BaseWarehouse.AllGameObj.Count >= BaseWarehouse.MaxElement)

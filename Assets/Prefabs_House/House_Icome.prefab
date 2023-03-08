@@ -157,7 +157,6 @@ GameObject:
   - component: {fileID: 5458390371028811409}
   - component: {fileID: 5458390371028811408}
   - component: {fileID: 5458390371028811415}
-  - component: {fileID: 5458390371028811414}
   m_Layer: 0
   m_Name: Add_Resource_Production
   m_TagString: Untagged
@@ -243,18 +242,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5458390371028811414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5458390371028811412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c54568a2ab55e1d449e4d05555d96942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5458390371103119998
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +254,6 @@ GameObject:
   - component: {fileID: 5458390371103119995}
   - component: {fileID: 5458390371103119994}
   - component: {fileID: 5458390371103119993}
-  - component: {fileID: 5458390371103119992}
   m_Layer: 0
   m_Name: Get_Resourse_Point
   m_TagString: Untagged
@@ -353,18 +339,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5458390371103119992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5458390371103119998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c54568a2ab55e1d449e4d05555d96942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5458390371360942586
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,14 +351,13 @@ GameObject:
   - component: {fileID: 5458390371360942470}
   - component: {fileID: 5458390371360942469}
   - component: {fileID: 5458390371360942468}
-  - component: {fileID: 5458390371360942471}
   m_Layer: 0
   m_Name: Main_Contact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5458390371360942587
 Transform:
   m_ObjectHideFlags: 0
@@ -463,18 +436,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5458390371360942471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5458390371360942586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c54568a2ab55e1d449e4d05555d96942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &109103227679790674
 PrefabInstance:
   m_ObjectHideFlags: 0

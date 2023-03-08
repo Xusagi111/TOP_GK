@@ -1,15 +1,21 @@
 ﻿using Building;
 using Resource;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Script.Game_Buildings.State
 {
-    public static class UpdateTimeCreateR 
+    [Serializable]
+    public class UpdateTimeCreateR
     {
-        public static IEnumerator UpdateTime(ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource ReceivedRes,
+        [Inject]
+        private CreateR createR;
+
+        public IEnumerator UpdateTime(ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource ReceivedRes,
             float TImeCreateOneRes, TextMeshProUGUI TextCountCreateR)
         {
             float InitialProductionTime = TImeCreateOneRes;
@@ -22,23 +28,8 @@ namespace Assets.Script.Game_Buildings.State
             TextCountCreateR.text = "";
             if (TImeCreateOneRes == 0)
             {
-                CreateR.CreateOneR(ResForProduction, ListAddRes, ReceivedRes);
+                createR.CreateOneR(ResForProduction, ListAddRes, ReceivedRes);
             }
-        }
-    }
-
-    public static class CreateR
-    {
-        public static void CreateOneR(ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource TypeRes)
-        {
-            BaseResource PrefabCreateR = null;
-            foreach (var item in Buildings.instance.AllInstanceResource)
-            {
-                if (TypeRes == item.TypeRes) { PrefabCreateR = item; break;} 
-            }
-
-            GameObject.Destroy(ResForProduction.AllGameObj[0]);
-            ListAddRes.Add(GameObject.Instantiate(PrefabCreateR, Vector3.zero, Quaternion.identity, ResForProduction.EndMovePositionResource));
         }
     }
 }

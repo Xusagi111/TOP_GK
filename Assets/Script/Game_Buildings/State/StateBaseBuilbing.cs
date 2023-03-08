@@ -8,15 +8,14 @@ using Zenject;
 namespace Assets.Script.Game_Buildings.State
 {
     [System.Serializable]
-    public abstract class StateBaseBuilbing : IBuildingState, IFixedTickable
+    public abstract class StateBaseBuilbing : IBuildingState
     {
         protected EnumResource CurrentTypeRes = EnumResource.NullType;
         [field: SerializeField] public ResourceWarhouse BaseWarehouse;
         protected bool IsUpdateTike = false;
-        protected DataBulding DataBulding;
+        [field: SerializeField] public DataBulding DataBulding;
         protected CompositeDisposable Disposable = new CompositeDisposable();
         protected Inventory IInventoryPlayer;
-    
 
         public virtual void Enter()
         {
@@ -28,7 +27,7 @@ namespace Assets.Script.Game_Buildings.State
             //Дестроить тип
         }
 
-        public virtual void FixedTick()
+        public virtual void IUpdate()
         {
             //Обновления
         }

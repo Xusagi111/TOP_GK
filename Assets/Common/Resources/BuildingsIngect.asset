@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee79e8c740c4c3c48ac3af6a38a498b0, type: 3}
+  m_Name: BuildingsIngect
+  m_EditorClassIdentifier: 
+  <House1>k__BackingField: {fileID: 2693225592747725521, guid: d8874fc2346eb3e48a5c64d9dffee2ad,
+    type: 3}
+  <House2>k__BackingField: {fileID: 3844516922590237456, guid: 2146de5b8290309459cef0091d6ba33a,
+    type: 3}
+  <AllInstanceResource>k__BackingField:
+  - {fileID: 8304571257864045114, guid: ccf27fb3b28c25a4aa80cf3f18cfea1d, type: 3}
+  - {fileID: 414572084046413202, guid: 9bcbe9cac3bfda94ea83b511e8bbb7e3, type: 3}
+  - {fileID: 468342483624453904, guid: 33b79cb8af0f46e4f9b7247dd84796c5, type: 3}
