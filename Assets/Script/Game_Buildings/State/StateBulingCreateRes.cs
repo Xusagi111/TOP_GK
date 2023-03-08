@@ -1,10 +1,10 @@
-﻿using Building;
+﻿using Assets.Script.Installer.App.Building;
+using Building;
 using Resource;
 using System.Collections;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Script.Game_Buildings.State
 {
@@ -14,13 +14,12 @@ namespace Assets.Script.Game_Buildings.State
         [field:SerializeField] protected EnumResource CurrentGetTypeRes;
         private Collider _addResTrigger;
         private Collider _getResTrigger;
-        private float TimeCreateOneElement;
         [field: SerializeField] public ResourceWarhouse GetRes { get; protected set; }
-        private IEnumerator _updateTimeCreateRCor;
-
+        private LinkCoroutine _linkCoroutine = new LinkCoroutine(); 
         private UpdateTimeCreateR _updateTimeCreateR;
+        private ConfigBuilding _configData;
 
-        public StateBuildingCreateRes(DataBulding dataBulding, UpdateTimeCreateR updateTimeCreateR)
+        public StateBuildingCreateRes(DataBulding dataBulding, UpdateTimeCreateR updateTimeCreateR, ConfigBuilding ConfigData)
         {
             CurrentTypeRes = GetTypeBuilding.GetTypeRes(typeof(AddResource));
             CurrentGetTypeRes = GetTypeBuilding.GetTypeRes(typeof(GetResource));
@@ -31,6 +30,7 @@ namespace Assets.Script.Game_Buildings.State
             GetRes = new ResourceWarhouse(CurrentGetTypeRes, _getResTrigger.transform);
             BaseWarehouse = new ResourceWarhouse(CurrentTypeRes, _addResTrigger.transform);
             _updateTimeCreateR = updateTimeCreateR;
+            _configData = ConfigData;
         }
 
         public override void Enter()
@@ -57,10 +57,10 @@ namespace Assets.Script.Game_Buildings.State
         {
             if (IsUpdateTike == false) return;
 
-            if (_updateTimeCreateRCor == null &&
+            if (_linkCoroutine.UpdateTimeCor == null &&
                 BaseWarehouse.AllGameObj.Count > 1 &&
                 GetRes.MaxElement > BaseWarehouse.AllGameObj.Count &&
-                _updateTimeCreateR != null) 
+                _updateTimeCreateR != null ) 
             {
                 CreateRes();
             }
@@ -68,9 +68,15 @@ namespace Assets.Script.Game_Buildings.State
 
         public void CreateRes()
         {
-            _updateTimeCreateRCor = _updateTimeCreateR.UpdateTime(BaseWarehouse, GetRes.AllGameObj, BaseWarehouse.TypeRes,
-                TimeCreateOneElement, DataBulding.TimeCreateOneResourceT);
-            Coroutines.instance.StartCoroutine(_updateTimeCreateRCor);
+            _linkCoroutine.UpdateTimeCor = _updateTimeCreateR.UpdateTime(_linkCoroutine, BaseWarehouse, GetRes.AllGameObj, BaseWarehouse.TypeRes,
+                _configData.TimeCreateOneRes, DataBulding.TimeCreateOneResourceT);
+            Coroutines.instance.StartCoroutine(_linkCoroutine.UpdateTimeCor);
         }
     }
 }
+
+public class LinkCoroutine
+{
+    public IEnumerator UpdateTimeCor;
+}
+

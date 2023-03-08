@@ -15,7 +15,7 @@ namespace Assets.Script.Game_Buildings.State
         [Inject]
         private CreateR createR;
 
-        public IEnumerator UpdateTime(ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource ReceivedRes,
+        public IEnumerator UpdateTime(LinkCoroutine linkCoroutine, ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource ReceivedRes,
             float TImeCreateOneRes, TextMeshProUGUI TextCountCreateR)
         {
             float InitialProductionTime = TImeCreateOneRes;
@@ -30,6 +30,8 @@ namespace Assets.Script.Game_Buildings.State
             {
                 createR.CreateOneR(ResForProduction, ListAddRes, ReceivedRes);
             }
+
+           linkCoroutine.UpdateTimeCor = null;
         }
     }
 }

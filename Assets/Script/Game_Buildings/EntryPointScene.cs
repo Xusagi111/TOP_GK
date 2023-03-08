@@ -12,96 +12,16 @@ namespace Building
     public class EntryPointScene : MonoBehaviour
     {
         [Inject]
-        private List<BaseResource> AllTypeRes;
-
+        private List<BaseResource> _allTypeRes;
         [Inject]
-        private BuildingsStateLog OneHouse;
-
-        [Inject]
-        public CreateR CreateR;
-        [Inject]
-        public UpdateTimeCreateR UpdateTimeCreateR;
-
-    
+        private BuildingsStateLog _oneHousePrefab;
 
         private void Start()
         {
-           // OneHouse.SetConstruct();
-            //Создание игрока
             CreatePlayer();
-            var CreateHouse = Instantiate(OneHouse, Vector3.zero, Quaternion.identity);
+            var CreateHouse = Instantiate(_oneHousePrefab, Vector3.zero, Quaternion.identity);
             CreateHouse.SetConstruct();
-            //Заменить на точки которые должны инжектиться.
-
-
-            //Создание здания
-            //CreateHouseFactory(Buildings.instance.House1, EnumResource.Log, EnumResource.Log, EnumResource.Board);
-            ////Создания здания который производит конкретный рессурс
-            //CreateBuoldingsIcomeResource(Buildings.instance.House2, Buildings.instance.MoneyPrefab, EnumResource.Log, EnumResource.Money, _twoPointCreateBuilding);
-            ////Cоздания здания без сборки
-            //CreateBuildingsNoConstructRes(Buildings.instance.House2, Buildings.instance.PrefabCreateLogRes, EnumResource.Log, _threePointCreateBuilding);
         }
-
-        //private void CreateHouseFactory(DataBulding instanceHouse, EnumResource AddConstructR, EnumResource AddCreateR, EnumResource GetCreateR)
-        //{
-        //    var NewHouse = Instantiate(instanceHouse, _onePointCreateBuilding.position, Quaternion.identity);
-        //    NewHouse.ConstructViewBuilding();
-          
-        //    var Resource = new ResourceWarhouse(AddConstructR);
-        //    var WarHouse = NewHouse.WarhouseConstruct;
-
-        //    //WarHouse.Init(NewHouse.transform, Resource);
-        //    NewHouse.ConstructionBulding.EventToContact.AddListener(WarHouse.AddResource);
-        //    WarHouse.EventFullingResource.AddListener(NewHouse.EndCreatingFactory);
-        //    WarHouse.EventFullingResource.AddListener(() => ModificalCreatorBuildings(NewHouse, NewHouse.AddRes, NewHouse.GetRes, AddCreateR, GetCreateR));
-        //}
-
-        //private void ModificalCreatorBuildings(DataBulding CreatorHouse, ContactWithTheObject AddResourse, ContactWithTheObject GetPointResource, EnumResource AddCreateR, EnumResource GetCreateR)
-        //{
-        //    var Creator = CreatorHouse.gameObject.AddComponent<CreateResourceBuildings>();
-        //    Creator.Init(CreatorHouse.TimeCreateOneResourceT);
-
-        //    ResourceWarhouse AddResource = new ResourceWarhouse(AddCreateR);
-        //    ResourceWarhouse GetResource = new ResourceWarhouse(GetCreateR);
-
-        //    Creator.AddResourceWarhouse.Init(AddResourse.transform, AddResource);
-        //    Creator.GetResource.Init(GetPointResource.transform, GetResource);
-
-        //    Creator._checkCreateResource = true;
-        //    GetPointResource.EventToContact.AddListener(Creator.GetContactResource);
-        //    AddResourse.EventToContact.AddListener(Creator.AddResource);
-        //}
-
-        //private void CreateBuoldingsIcomeResource(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource GetCreateR, EnumResource CreateR, Transform positionCreateHouse)
-        //{
-        //    var NewHouse = Instantiate(instanceHouse, positionCreateHouse.position, Quaternion.identity);
-        //    NewHouse.ConstructViewBuilding();
-          
-        //    var Resource = new ResourceWarhouse(GetCreateR);
-        //    var WarHouse = NewHouse.WarhouseConstruct;
-
-        //    //WarHouse.Init(NewHouse.transform, Resource);
-        //    NewHouse.ConstructionBulding.EventToContact.AddListener(WarHouse.AddResource);
-        //    WarHouse.EventFullingResource.AddListener(NewHouse.EndCreatingIcomeBuildings);
-        //    WarHouse.EventFullingResource.AddListener(() => ModificalCreatorIcomeBuildings(NewHouse, NewHouse.GetRes, EndCreateR, CreateR));
-        //}
-
-        //private void CreateBuildingsNoConstructRes(DataBulding instanceHouse, BaseResource EndCreateR, EnumResource CreateR, Transform positionCreateHouse)
-        //{
-        //    var NewHouse = Instantiate(instanceHouse, positionCreateHouse.position, Quaternion.identity);
-        //    NewHouse.EndViewCreatingIcomeBuildings();
-        //    ModificalCreatorIcomeBuildings(NewHouse, NewHouse.GetRes, EndCreateR, CreateR);
-        //}
-
-        //private void ModificalCreatorIcomeBuildings(DataBulding CreatorHouse, ContactWithTheObject GetPointResource, BaseResource EndCreateR, EnumResource GetCreateR)
-        //{
-        //    const int TimeCreateOneProduct = 3;
-        //    var Creator = CreatorHouse.gameObject.AddComponent<CreatorIcome>();
-
-        //    var ResourceWarhouse = new ResourceWarhouse(GetCreateR);
-        //    Creator.Init(TimeCreateOneProduct, GetPointResource.gameObject.transform, EndCreateR, ResourceWarhouse, CreatorHouse.TimeCreateOneResourceT);
-        //    GetPointResource.EventToContact.AddListener(Creator.GetContactResource);
-        //}
 
         private void CreatePlayer()
         {
@@ -117,7 +37,7 @@ namespace Building
         {
             BaseResource PrefabLogRes = null;
             BaseResource PrefabBoardRes = null;
-            foreach (var item in AllTypeRes)
+            foreach (var item in _allTypeRes)
             {
                 if (item.TypeRes == EnumResource.Log) PrefabLogRes = item;
                 if (item.TypeRes == EnumResource.Board) PrefabBoardRes = item;
@@ -139,49 +59,3 @@ namespace Building
         }
     }
 }
-
-//public class Player
-//{
-//}
-
-//public class Enemy
-//{
-//    readonly Player _player;
-
-//    public Enemy(Player player)
-//    {
-//        _player = player;
-//    }
-
-//    public class Factory : PlaceholderFactory<Enemy>
-//    {
-//    }
-//}
-
-//public class EnemySpawner : ITickable
-//{
-//    readonly Enemy.Factory _enemyFactory;
-
-//    public EnemySpawner(Enemy.Factory enemyFactory)
-//    {
-//        _enemyFactory = enemyFactory;
-//    }
-
-//    public void Tick()
-//    {
-//        if (ShouldSpawnNewEnemy())
-//        {
-//            var enemy = _enemyFactory.Create();
-//            // ...
-//        }
-//    }
-//}
-
-//public class TestInstaller : MonoInstaller
-//{
-//    public override void InstallBindings()
-//    {
-//        Container.BindInterfacesTo<EnemySpawner>().AsSingle();
-//        Container.BindFactory<Enemy, Enemy.Factory>();
-//    }
-//}

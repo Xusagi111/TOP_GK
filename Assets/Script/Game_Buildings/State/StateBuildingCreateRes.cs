@@ -1,11 +1,10 @@
-﻿using Building;
+﻿using Assets.Script.Installer.App.Building;
+using Building;
 using Resource;
-using System.Collections;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using Zenject;
-using ModestTree;
 
 namespace Assets.Script.Game_Buildings.State
 {
@@ -14,35 +13,28 @@ namespace Assets.Script.Game_Buildings.State
     {
         [Inject]
         private UpdateTimeCreateR _updateTimeRes;
+        [Inject]
+        private ConfigBuilding _configData;
 
         protected EnumResource CurrentGetTypeRes;
         protected BaseWarehouse GetRes;
-        private float TimeCreateOneElement;
-        private IEnumerator _updateTimeCreateR;
         private Collider _getResTrigger;
+        private LinkCoroutine _linkCoroutine = new LinkCoroutine();
+        private DataBulding _dataBulding;
 
-        public StateBuildingCreateRes(DataBulding dataBulding)
+        public StateBuildingCreateRes(DataBulding dataBulding, UpdateTimeCreateR UpdateTimeRes, ConfigBuilding ConfigData)
         {
             CurrentGetTypeRes = GetTypeBuilding.GetTypeRes(typeof(GetResource));
-            dataBulding.EndViewCreatingIcomeBuildings(); //Возможно перемещение в  Enter and Exit
             _getResTrigger = dataBulding.GetRes;
-        }
-
-        public void Initialize()
-        {
-            CheckInjection();     // проверка инжекции
-        }
-
-        private void CheckInjection()
-        {
-            Assert.IsNotNull(_updateTimeRes);
+            _updateTimeRes = UpdateTimeRes;
+            _dataBulding = dataBulding;
+            _configData = ConfigData;
         }
 
         public override void Enter()
         {
-            DataBulding.EndViewFactory();
+            _dataBulding.EndViewCreatingIcomeBuildings();
             IsUpdateTike = true;
-
             _getResTrigger.OnTriggerEnterAsObservable()
             .Subscribe(collider => InventoryContact.GetCollizionRes(collider.gameObject, GetRes.AllResorce, _getResTrigger.transform))
             .AddTo(Disposable);
@@ -53,7 +45,7 @@ namespace Assets.Script.Game_Buildings.State
             if (IsUpdateTike == false) return;
 
 
-            if (_updateTimeCreateR == null &&
+            if (_linkCoroutine.UpdateTimeCor == null &&
                 BaseWarehouse.AllGameObj.Count > 1 &&
                 GetRes.AllResorce.MaxElement > BaseWarehouse.AllGameObj.Count)
             {
@@ -63,9 +55,9 @@ namespace Assets.Script.Game_Buildings.State
 
         public void CreateRes()
         {
-            _updateTimeCreateR = _updateTimeRes.UpdateTime(BaseWarehouse, GetRes.AllResorce.AllGameObj, 
-                BaseWarehouse.TypeRes, TimeCreateOneElement, DataBulding.TimeCreateOneResourceT);
-            Coroutines.instance.StartCoroutine(_updateTimeCreateR);
+            _linkCoroutine.UpdateTimeCor = _updateTimeRes.UpdateTime(_linkCoroutine,BaseWarehouse, GetRes.AllResorce.AllGameObj, 
+                BaseWarehouse.TypeRes, _configData.TimeCreateOneRes, DataBulding.TimeCreateOneResourceT);
+            Coroutines.instance.StartCoroutine(_linkCoroutine.UpdateTimeCor);
         }
 
         public override void Exit()

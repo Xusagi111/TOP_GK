@@ -1,4 +1,5 @@
-﻿using Building;
+﻿using Assets.Script.Installer.App.Building;
+using Building;
 using Resource;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,14 @@ namespace Assets.Script.Game_Buildings.State
 {
     public abstract class BaseBuildingsState<AddRes, GetRes> : MonoBehaviour
     {
+        [Inject]
+        private UpdateTimeCreateR _updateTimeCreateR;
+        [Inject]
+        private  ConfigBuilding _configData;
         private Dictionary<Type, StateBaseBuilbing> behaviorMap;
         private IBuildingState _ICurrentState;
         public DataBulding DataBuilding { get; private set; }
 
-        [Inject]
-        private UpdateTimeCreateR _updateTimeCreateR;
         private bool _isinit = false;
 
         private void Awake() => DataBuilding = GetComponent<DataBulding>();
@@ -24,14 +27,11 @@ namespace Assets.Script.Game_Buildings.State
         {
             if (_isinit == true) return;
 
-            Debug.Log(_updateTimeCreateR);
-
-            //Прокидывания _dataBuilding не подходят
             behaviorMap = new Dictionary<Type, StateBaseBuilbing>();
             behaviorMap[typeof(ConstructionBuilding<AddRes, GetRes>)] = new ConstructionBuilding<AddRes, GetRes>(DataBuilding, this);
-            behaviorMap[typeof(StateBuildingCreateRes<AddRes, GetRes>)] = new StateBuildingCreateRes<AddRes, GetRes>(DataBuilding, _updateTimeCreateR);
-            behaviorMap[typeof(StateBuildingCreateRes<GetRes>)] = new StateBuildingCreateRes<GetRes>(DataBuilding);
-            behaviorMap[typeof(StateBuildingCreateRes<MoneyObj>)] = new StateBuildingCreateRes<MoneyObj>(DataBuilding); //Возможно заменить
+            behaviorMap[typeof(StateBuildingCreateRes<AddRes, GetRes>)] = new StateBuildingCreateRes<AddRes, GetRes>(DataBuilding, _updateTimeCreateR, _configData);
+            behaviorMap[typeof(StateBuildingCreateRes<GetRes>)] = new StateBuildingCreateRes<GetRes>(DataBuilding, _updateTimeCreateR, _configData);
+            behaviorMap[typeof(StateBuildingCreateRes<MoneyObj>)] = new StateBuildingCreateRes<MoneyObj>(DataBuilding, _updateTimeCreateR, _configData); 
 
             _isinit = true;
         }
