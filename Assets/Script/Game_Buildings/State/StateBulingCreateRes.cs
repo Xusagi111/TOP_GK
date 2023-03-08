@@ -1,5 +1,4 @@
-﻿using Assets.Script.Player.Interfaces;
-using Building;
+﻿using Building;
 using Resource;
 using System.Collections;
 using UniRx;
@@ -60,7 +59,8 @@ namespace Assets.Script.Game_Buildings.State
 
         public void CreateRes()
         {
-            _updateTimeCreateR = UpdateTimeCreateR.UpdateTime(BaseWarehouse, GetRes.AllResorce.AllGameObj, BaseWarehouse.TypeRes, TimeCreateOneElement, DataBulding.TimeCreateOneResourceT);
+            _updateTimeCreateR = UpdateTimeCreateR.UpdateTime(BaseWarehouse, GetRes.AllResorce.AllGameObj, BaseWarehouse.TypeRes,
+                TimeCreateOneElement, DataBulding.TimeCreateOneResourceT);
             Coroutines.instance.StartCoroutine(_updateTimeCreateR);
         }
     }

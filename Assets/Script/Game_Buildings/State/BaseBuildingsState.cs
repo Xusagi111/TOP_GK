@@ -11,6 +11,7 @@ namespace Assets.Script.Game_Buildings.State
         private Dictionary<Type, StateBaseBuilbing> behaviorMap;
         private IBuildingState _ICurrentState;
         public DataBulding DataBuilding { get; private set; }
+
         private void Awake()
         {
             DataBuilding = GetComponent<DataBulding>();
@@ -22,10 +23,9 @@ namespace Assets.Script.Game_Buildings.State
             //Прокидывания _dataBuilding не подходят
             behaviorMap = new Dictionary<Type, StateBaseBuilbing>();
             behaviorMap[typeof(ConstructionBuilding<AddRes, GetRes>)] = new ConstructionBuilding<AddRes, GetRes>(DataBuilding, this);
-            behaviorMap[typeof(ConstructionBuilding<AddRes, GetRes>)] = new ConstructionBuilding<AddRes, GetRes>(DataBuilding, this);
-            behaviorMap[typeof(StateBuildingCreateRes<MoneyObj>)] = new StateBuildingCreateRes<MoneyObj>(DataBuilding); //Возможно заменить
             behaviorMap[typeof(StateBuildingCreateRes<AddRes>)] = new StateBuildingCreateRes<AddRes, GetRes>(DataBuilding);
             behaviorMap[typeof(StateBuildingCreateRes<GetRes>)] = new StateBuildingCreateRes<GetRes>(DataBuilding);
+            behaviorMap[typeof(StateBuildingCreateRes<MoneyObj>)] = new StateBuildingCreateRes<MoneyObj>(DataBuilding); //Возможно заменить
         }
 
         protected void SetBuilding(IBuildingState House)

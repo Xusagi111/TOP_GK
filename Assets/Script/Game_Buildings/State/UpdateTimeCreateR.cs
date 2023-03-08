@@ -7,8 +7,6 @@ using UnityEngine;
 
 namespace Assets.Script.Game_Buildings.State
 {
-    //Перенаполнил логикой, должно быть только создание
-    //Внести его в контейнер
     public static class UpdateTimeCreateR 
     {
         public static IEnumerator UpdateTime(ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource ReceivedRes,
@@ -31,12 +29,16 @@ namespace Assets.Script.Game_Buildings.State
 
     public static class CreateR
     {
-        //Сделать производимый рессурс с помощью перебора массива.
-        //Убрать дефолтный тип
-        public static void CreateOneR(ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource resource)
+        public static void CreateOneR(ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource TypeRes)
         {
+            BaseResource PrefabCreateR = null;
+            foreach (var item in Buildings.instance.AllInstanceResource)
+            {
+                if (TypeRes == item.TypeRes) { PrefabCreateR = item; break;} 
+            }
+
             GameObject.Destroy(ResForProduction.AllGameObj[0]);
-            ListAddRes.Add(GameObject.Instantiate(new BaseResource(), Vector3.zero, Quaternion.identity, ResForProduction.EndMovePositionResource));
+            ListAddRes.Add(GameObject.Instantiate(PrefabCreateR, Vector3.zero, Quaternion.identity, ResForProduction.EndMovePositionResource));
         }
     }
 }
