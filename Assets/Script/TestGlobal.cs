@@ -2,7 +2,7 @@
 
 public class TestGlobal : MonoBehaviour
 {
-    public static float s_TimeMoveResourse = 1f;
+    public static float s_TimeMoveResourse = 0f;
     public float TimeMoveResourse;
 
     public void Awake()

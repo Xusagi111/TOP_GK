@@ -31,5 +31,10 @@ namespace Assets.Script
         {
             instance.StopCoroutine(coroutine);
         }
+
+        public static void StopRoutine(IEnumerator coroutine)
+        {
+            instance.StopCoroutine(coroutine);
+        }
     }
 }

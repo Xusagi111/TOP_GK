@@ -15,7 +15,6 @@ namespace Assets.Script.Game_Buildings.State
 
         public void CreateOneR(ResourceWarhouse ResForProduction, List<BaseResource> ListAddRes, EnumResource TypeRes)
         {
-            BaseResource PrefabCreateR = null;
             GameObject.Destroy(ResForProduction.AllGameObj[0]);
             ListAddRes.Add(GameObject.Instantiate(GetRes(TypeRes), Vector3.zero, Quaternion.identity, ResForProduction.EndMovePositionResource));
         }

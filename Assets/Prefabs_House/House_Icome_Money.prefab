@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2903509580762298359}
   - component: {fileID: 2903509580762298356}
   - component: {fileID: 2903509580762298357}
-  - component: {fileID: 2903509580762298358}
   m_Layer: 0
   m_Name: Main_Contact
   m_TagString: Untagged
@@ -98,18 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2903509580762298358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2903509580762298251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c54568a2ab55e1d449e4d05555d96942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2903509580970696933
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +109,6 @@ GameObject:
   - component: {fileID: 2903509580970696928}
   - component: {fileID: 2903509580970696929}
   - component: {fileID: 2903509580970696934}
-  - component: {fileID: 2903509580970696935}
   m_Layer: 0
   m_Name: Add_Resource_Production
   m_TagString: Untagged
@@ -208,18 +194,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2903509580970696935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2903509580970696933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c54568a2ab55e1d449e4d05555d96942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2903509581011715087
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +206,6 @@ GameObject:
   - component: {fileID: 2903509581011715082}
   - component: {fileID: 2903509581011715083}
   - component: {fileID: 2903509581011715080}
-  - component: {fileID: 2903509581011715081}
   m_Layer: 0
   m_Name: Get_Resourse_Point
   m_TagString: Untagged
@@ -318,18 +291,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2903509581011715081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2903509581011715087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c54568a2ab55e1d449e4d05555d96942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2903509582657176690
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +409,7 @@ MonoBehaviour:
   <ConstructionBulding>k__BackingField: {fileID: 2903509580762298357}
   <GetRes>k__BackingField: {fileID: 2903509581011715080}
   <AddRes>k__BackingField: {fileID: 2903509580970696934}
-  <TimeCreateOneResourceT>k__BackingField: {fileID: 3425867303147029102}
+  <UI>k__BackingField: {fileID: 6425189673035384683}
   <SwitchingStateConst>k__BackingField: 1
 --- !u!114 &2245092770262994873
 MonoBehaviour:
@@ -581,16 +542,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16f4b788765b6ec43b4b8f2871be3018, type: 3}
---- !u!114 &3425867303147029102 stripped
+--- !u!114 &6425189673035384683 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5585575608238312013, guid: 16f4b788765b6ec43b4b8f2871be3018,
+  m_CorrespondingSourceObject: {fileID: 4260977759710187336, guid: 16f4b788765b6ec43b4b8f2871be3018,
     type: 3}
   m_PrefabInstance: {fileID: 7064128310054602787}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 65efc6e9cc3515e4c95701164dbab4a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &6534811642058532783 stripped

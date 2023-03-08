@@ -1,5 +1,4 @@
-﻿using Assets.Script.Game_Buildings.State;
-using Assets.Script.Game_Buildings.State.NewState;
+﻿using Assets.Script.Game_Buildings.State.NewState;
 using Assets.Script.Player;
 using Assets.Script.Player.Interfaces;
 using Resource;

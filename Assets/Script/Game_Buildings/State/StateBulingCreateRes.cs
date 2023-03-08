@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Installer.App.Building;
+using Assets.Script.Player.Interfaces;
 using Building;
 using Resource;
 using System.Collections;
@@ -15,7 +16,9 @@ namespace Assets.Script.Game_Buildings.State
         private Collider _addResTrigger;
         private Collider _getResTrigger;
         [field: SerializeField] public ResourceWarhouse GetRes { get; protected set; }
-        private LinkCoroutine _linkCoroutine = new LinkCoroutine(); 
+        private LinkContact _linkCoroutineCreateR = new LinkContact(); 
+        private LinkContact _linkCoroutineGetRes = new LinkContact(); 
+        private LinkContact _linkCoroutineAddRes = new LinkContact();
         private UpdateTimeCreateR _updateTimeCreateR;
         private ConfigBuilding _configData;
 
@@ -26,7 +29,7 @@ namespace Assets.Script.Game_Buildings.State
             _addResTrigger = dataBulding.AddRes;
             _getResTrigger = dataBulding.GetRes;
             DataBulding = dataBulding;
-
+            UI = dataBulding.UI;
             GetRes = new ResourceWarhouse(CurrentGetTypeRes, _getResTrigger.transform);
             BaseWarehouse = new ResourceWarhouse(CurrentTypeRes, _addResTrigger.transform);
             _updateTimeCreateR = updateTimeCreateR;
@@ -39,12 +42,20 @@ namespace Assets.Script.Game_Buildings.State
             IsUpdateTike = true;
 
             _addResTrigger.OnTriggerEnterAsObservable()
-               .Subscribe(collider => InventoryContact.AddCoCollizionRes(collider.gameObject, BaseWarehouse, _addResTrigger.transform))
-               .AddTo(Disposable);
+                .Subscribe(collider => InventoryContact.AddCoCollizionRes(collider.gameObject, BaseWarehouse, _addResTrigger.transform, _linkCoroutineAddRes))
+                .AddTo(Disposable);
 
             _getResTrigger.OnTriggerEnterAsObservable()
-            .Subscribe(collider => InventoryContact.GetCollizionRes(collider.gameObject, GetRes, _getResTrigger.transform))
-            .AddTo(Disposable);
+                 .Subscribe(collider => InventoryContact.GetCollizionRes(collider.gameObject, GetRes, _getResTrigger.transform, _linkCoroutineGetRes))
+                 .AddTo(Disposable);
+
+            _addResTrigger.OnTriggerExitAsObservable()
+                .Subscribe(collider => InventoryContact.RemoveCollizionRes(collider.gameObject, _linkCoroutineAddRes))
+                .AddTo(Disposable);
+
+            _getResTrigger.OnTriggerExitAsObservable().
+                Subscribe(collider => InventoryContact.RemoveCollizionRes(collider.gameObject, _linkCoroutineGetRes))
+                .AddTo(Disposable);
         }
 
         public override void Exit()
@@ -57,9 +68,9 @@ namespace Assets.Script.Game_Buildings.State
         {
             if (IsUpdateTike == false) return;
 
-            if (_linkCoroutine.UpdateTimeCor == null &&
+            if (_linkCoroutineCreateR.UpdateTimeCor == null &&
                 BaseWarehouse.AllGameObj.Count > 1 &&
-                GetRes.MaxElement > BaseWarehouse.AllGameObj.Count &&
+                GetRes.MaxElement > GetRes.AllGameObj.Count &&
                 _updateTimeCreateR != null ) 
             {
                 CreateRes();
@@ -68,15 +79,16 @@ namespace Assets.Script.Game_Buildings.State
 
         public void CreateRes()
         {
-            _linkCoroutine.UpdateTimeCor = _updateTimeCreateR.UpdateTime(_linkCoroutine, BaseWarehouse, GetRes.AllGameObj, BaseWarehouse.TypeRes,
-                _configData.TimeCreateOneRes, DataBulding.TimeCreateOneResourceT);
-            Coroutines.instance.StartCoroutine(_linkCoroutine.UpdateTimeCor);
+            _linkCoroutineCreateR.UpdateTimeCor = _updateTimeCreateR.UpdateTime(_linkCoroutineCreateR, BaseWarehouse, GetRes.AllGameObj, GetRes.TypeRes,
+                _configData.TimeCreateOneRes, UI.ConstructT);
+            Coroutines.instance.StartCoroutine(_linkCoroutineCreateR.UpdateTimeCor);
         }
     }
 }
 
-public class LinkCoroutine
+public class LinkContact
 {
     public IEnumerator UpdateTimeCor;
+    public Inventory UserInventory;
 }
 

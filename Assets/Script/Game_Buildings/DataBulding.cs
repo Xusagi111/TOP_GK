@@ -1,5 +1,5 @@
 ﻿using Assets.Script.Game_Buildings.State;
-using TMPro;
+using Assets.Script.UI;
 using UnityEngine;
 
 
@@ -7,11 +7,10 @@ namespace Building
 {
     public class DataBulding : MonoBehaviour
     {
-        //Прокинуть триггеры через UNiRX
         [field: SerializeField] public Collider ConstructionBulding { get; private set; }
         [field: SerializeField] public Collider GetRes { get; private set; }
         [field: SerializeField] public Collider AddRes { get; private set; }
-        [field: SerializeField] public TextMeshProUGUI TimeCreateOneResourceT { get; private set; }
+        [field: SerializeField] public  BuildingUi UI { get; private set; }
         [field: SerializeField] public StateEnem SwitchingStateConst {get; private set;}
 
         public void ConstructViewBuilding()

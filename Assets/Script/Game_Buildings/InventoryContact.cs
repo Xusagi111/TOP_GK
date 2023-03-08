@@ -103,18 +103,37 @@ namespace Building
             else return false;
         }
 
-        public static void AddCoCollizionRes(GameObject Player, ResourceWarhouse baseWarehouse, Transform transform)
+        public static void AddCoCollizionRes(GameObject Player, ResourceWarhouse baseWarehouse, Transform transform, LinkContact linkCoroutine)
         {
+            Debug.Log("AddCoCollizionRes " + Player.name);
             var InventoryPlayer = InventoryContact.GetInventoryUser(Player);
             if (InventoryContact.CheckingNullPlayerINventory(InventoryPlayer)) return;
-            Coroutines.StartRoutine(InventoryContact.GetResourceInventoryToCreateProduct(baseWarehouse, InventoryPlayer, transform));
+
+            var Cor = InventoryContact.GetResourceInventoryToCreateProduct(baseWarehouse, InventoryPlayer, transform);
+            Coroutines.StartRoutine(Cor);
+            linkCoroutine.UpdateTimeCor = Cor;
         }
 
-        public static void GetCollizionRes(GameObject Player, ResourceWarhouse baseWarehouse, Transform transform)
+        public static void GetCollizionRes(GameObject Player, ResourceWarhouse baseWarehouse, Transform transform, LinkContact linkCoroutine)
         {
+            Debug.Log("GetCollizionRes " + Player.name);
             var InventoryPlayer = InventoryContact.GetInventoryUser(Player);
             if (InventoryContact.CheckingNullPlayerINventory(InventoryPlayer)) return;
-            Coroutines.StartRoutine(InventoryContact.GetAllResource(baseWarehouse, InventoryPlayer, transform));
+
+            var Cor = InventoryContact.GetAllResource(baseWarehouse, InventoryPlayer, transform);
+            Coroutines.StartRoutine(Cor);
+            linkCoroutine.UpdateTimeCor = Cor;
+        }
+
+        public static void RemoveCollizionRes(GameObject Player, LinkContact linkCoroutine)
+        {
+            Debug.Log("RemoveCollizionRes " + Player.name);
+            var InventoryPlayer = InventoryContact.GetInventoryUser(Player);
+            if (InventoryContact.CheckingNullPlayerINventory(InventoryPlayer)) return;
+            if (InventoryPlayer == linkCoroutine.UserInventory)
+            {
+                if (linkCoroutine.UpdateTimeCor != null) Coroutines.StopRoutine(linkCoroutine.UpdateTimeCor);
+            }
         }
     }
 }
