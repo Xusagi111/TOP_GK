@@ -25,21 +25,21 @@ namespace Building
         {
             if (_checkCreateResource == false) return;
 
-            var item = AddResourceWarhouse.AllResorce;
-            if (item.CountCreateResource <= item.CountElement &&
-                GetResource.AllResorce.MaxElement > GetResource.AllResorce.CountElement)
-            {
-                var DifferenceTime = TimerCreateR - _timeOneCreateR;
-                _timeOneCreateR = _timeOneCreateR - Time.deltaTime;
-                CreateTimeResT.text = DifferenceTime >= 0 ? $"Create R {_timeOneCreateR} / {TimerCreateR}" : "";
+            //var item = AddResourceWarhouse.AllResorce;
+            //if (item.CountCreateResource <= item.CountElement &&
+            //    GetResource.AllResorce.MaxElement > GetResource.AllResorce.CountElement)
+            //{
+            //    var DifferenceTime = TimerCreateR - _timeOneCreateR;
+            //    _timeOneCreateR = _timeOneCreateR - Time.deltaTime;
+            //    CreateTimeResT.text = DifferenceTime >= 0 ? $"Create R {_timeOneCreateR} / {TimerCreateR}" : "";
 
-                if (_timeOneCreateR <= 0)
-                {
-                    _timeOneCreateR = TimerCreateR;
-                    CreateResourceM(AddResourceWarhouse, GetResource);
-                }
-            }
-            else CreateTimeResT.text = "";
+            //    if (_timeOneCreateR <= 0)
+            //    {
+            //        _timeOneCreateR = TimerCreateR;
+            //        CreateResourceM(AddResourceWarhouse, GetResource);
+            //    }
+            //}
+            //else CreateTimeResT.text = "";
         }
 
         public void AddResource(GameObject CheckingInventory)
@@ -47,13 +47,13 @@ namespace Building
             var PLayerInventory = ExtensionMethodsBildings.GetInventoryUser(CheckingInventory);
             if (ExtensionMethodsBildings.CheckingNullPlayerINventory(PLayerInventory)) return;
 
-            var Inventory = PLayerInventory.AllResoursePlayer;
-            var item = AddResourceWarhouse.AllResorce;
-            var WarhouseR = AddResourceWarhouse.AllResorce;
-            if (WarhouseR.AllGameObj.Count < WarhouseR.MaxElement)
-            {
-                StartCoroutine(AddResourceWarhouse.LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, AddResourceWarhouse.EndMovePositionResource));
-            }
+            //var Inventory = PLayerInventory.AllResoursePlayer;
+            //var item = AddResourceWarhouse.AllResorce;
+            //var WarhouseR = AddResourceWarhouse.AllResorce;
+            //if (WarhouseR.AllGameObj.Count < WarhouseR.MaxElement)
+            //{
+            //    StartCoroutine(AddResourceWarhouse.LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, AddResourceWarhouse.EndMovePositionResource));
+            //}
         }
 
         public void GetContactResource(GameObject CheckingInventory)
@@ -62,43 +62,43 @@ namespace Building
             var Inventory = ExtensionMethodsBildings.GetInventoryUser(CheckingInventory);
             if (ExtensionMethodsBildings.CheckingNullPlayerINventory(Inventory)) return;
 
-            var item = GetResource.AllResorce;
-            if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
-            {
-                StartCoroutine(GetResource.LogicContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
-            }
+            //var item = GetResource.AllResorce;
+            //if (item.AllGameObj != null && Inventory.AllResoursePlayer.Count < Inventory.MaxCountElement)
+            //{
+            //    StartCoroutine(GetResource.LogicContact.GetAllResource(item, Inventory, CheckingInventory.gameObject.transform));
+            //}
         }
 
-        private void CreateResourceM(BaseWarehouse WarhoureRes, BaseWarehouse EndWarhouseRes)
-        {
-            var AllBaseResource = Buildings.instance.AllInstanceResource;
-            EnumResource TypeCreateRes = EndWarhouseRes.AllResorce.TypeRes;
-            BaseResource PrefabCreateRes = null;
+        //private void CreateResourceM(BaseWarehouse WarhoureRes, BaseWarehouse EndWarhouseRes)
+        //{
+        //    var AllBaseResource = Buildings.instance.AllInstanceResource;
+        //    EnumResource TypeCreateRes = EndWarhouseRes.AllResorce.TypeRes;
+        //    BaseResource PrefabCreateRes = null;
 
-            foreach (var item in AllBaseResource) 
-            {
-                if (item.TypeRes == TypeCreateRes)
-                {
-                    PrefabCreateRes = item;
-                    break;
-                }
-            }
+        //    foreach (var item in AllBaseResource) 
+        //    {
+        //        if (item.TypeRes == TypeCreateRes)
+        //        {
+        //            PrefabCreateRes = item;
+        //            break;
+        //        }
+        //    }
 
-            var ListGetRes = WarhoureRes.AllResorce.AllGameObj;
-            var ListSetRes = EndWarhouseRes.AllResorce.AllGameObj;
+        //    var ListGetRes = WarhoureRes.AllResorce.AllGameObj;
+        //    var ListSetRes = EndWarhouseRes.AllResorce.AllGameObj;
 
-            if (PrefabCreateRes != null && ListGetRes.Count > 0)
-            {
-                var CreateR = Instantiate(PrefabCreateRes, Vector3.one, Quaternion.identity);
-                CreateR.transform.SetParent(EndWarhouseRes.EndMovePositionResource);
-                CreateR.transform.position = Vector3.one;
-                var CurrentGetRes = ListGetRes[0];
-                WarhoureRes.AllResorce.AllGameObj.Remove(CurrentGetRes);
-                Destroy(CurrentGetRes.gameObject);
-                ListSetRes.Add(CreateR);
-                EndWarhouseRes.AllResorce.CountElement = ListSetRes.Count;
-            }
-            else Debug.LogError("Данный рессурс равен null");
-        }
+        //    if (PrefabCreateRes != null && ListGetRes.Count > 0)
+        //    {
+        //        var CreateR = Instantiate(PrefabCreateRes, Vector3.one, Quaternion.identity);
+        //        CreateR.transform.SetParent(EndWarhouseRes.EndMovePositionResource);
+        //        CreateR.transform.position = Vector3.one;
+        //        var CurrentGetRes = ListGetRes[0];
+        //        WarhoureRes.AllResorce.AllGameObj.Remove(CurrentGetRes);
+        //        Destroy(CurrentGetRes.gameObject);
+        //        ListSetRes.Add(CreateR);
+        //        EndWarhouseRes.AllResorce.CountElement = ListSetRes.Count;
+        //    }
+        //    else Debug.LogError("Данный рессурс равен null");
+        //}
     }
 }

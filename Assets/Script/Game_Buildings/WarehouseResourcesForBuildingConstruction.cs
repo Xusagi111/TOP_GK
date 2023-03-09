@@ -32,54 +32,36 @@ namespace Building
             }
 
             var Inventory = PLayerInventory.AllResoursePlayer;
-            var item = AllResorce;
-                LogicContact.StartCoroutine(LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, EndMovePositionResource));
+            //var item = AllResorce;
+            //    LogicContact.StartCoroutine(LogicContact.GetResourceInventoryToCreateProduct(item, Inventory, EndMovePositionResource));
         }
 
         private void FixedUpdate()
         {
             if (_isInit == false) return;
 
-            if (_isFullingRes == false && CheckFullingResource()) 
-            {
-                Debug.Log("Завершение строительства");
-                _isFullingRes = true;
-                EventFullingResource?.Invoke();
-            }
+            //if (_isFullingRes == false && CheckFullingResource()) 
+            //{
+            //    Debug.Log("Завершение строительства");
+            //    _isFullingRes = true;
+            //    EventFullingResource?.Invoke();
+            //}
 
-            TimeCreateOneResourceT.text = $"{AllResorce.TypeRes} {AllResorce.MaxElement - AllResorce.AllGameObj.Count}";
+            //TimeCreateOneResourceT.text = $"{AllResorce.TypeRes} {AllResorce.MaxElement - AllResorce.AllGameObj.Count}";
         }
 
         private void OnDestroy()
         {
-            Destroy(LogicContact);
-            foreach (var item in AllResorce.AllGameObj) Destroy(item.gameObject);
+            //Destroy(LogicContact);
+            //foreach (var item in AllResorce.AllGameObj) Destroy(item.gameObject);
             EventFullingResource.RemoveAllListeners();
         }
 
-        private bool CheckFullingResource()
-        {
-            if (AllResorce.AllGameObj.Count == AllResorce.MaxElement) return true;
-            else return false;
-        }
+        //private bool CheckFullingResource()
+        //{
+        //    //if (AllResorce.AllGameObj.Count == AllResorce.MaxElement) return true;
+        //    //else return false;
+        //}
 
-    }
-
-
-    [System.Serializable]
-    public class ResourceWarhouse 
-    {
-        public int CountElement;
-        public int MaxElement = 10;
-        public List<BaseResource> AllGameObj = new List<BaseResource>();
-        public string NameRes { get; set; }
-        public int CountCreateResource { get; set; } = 1; //Пока не используется. 
-        public float TimeCreateOneResource { get; set; } = 3;
-        public EnumResource TypeRes { get; private set; }
-
-        public ResourceWarhouse(EnumResource TypeRes)
-        {
-           this.TypeRes = TypeRes;
-        }
     }
 }

@@ -1,6 +1,6 @@
-﻿using ModestTree;
-using System;
-using System.Collections;
+﻿using System;
+using System.Linq;
+using UniRx.Triggers;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -15,8 +15,8 @@ public sealed class PlayerPresenter : IInitializable, ITickable, IDisposable, IP
     private Vector3 moveDirection;
 
     private CompositeDisposable _disposable = new CompositeDisposable();
+    public readonly ReactiveCommand<Collider> colliderReactCommand = new ReactiveCommand<Collider>();
 
-    [Inject]
     public PlayerPresenter(InputHandler input, PlayerView view, PlayerModel playerModel) 
     {
         _inputHandler = input;
@@ -24,11 +24,7 @@ public sealed class PlayerPresenter : IInitializable, ITickable, IDisposable, IP
         _playerModel = playerModel;
     }
 
-    public void Initialize()
-    {
-        CheckInjection();     // проверка инжекции
-        SubscribesTrigger(); // подписка на тригеры из вьюшки
-    }
+    public void Initialize() => SubscribesTrigger();  // подписка на тригеры из вьюшки
 
     public void Tick()
     {
@@ -37,29 +33,22 @@ public sealed class PlayerPresenter : IInitializable, ITickable, IDisposable, IP
         ProcessRotateLogik();
         ProccesMoveAnimation();
     }
-    public void Dispose()
-    {
-        _disposable.Clear();
-    }
-
-    private void CheckInjection()
-    {
-        Assert.IsNotNull(_inputHandler);
-        Assert.IsNotNull(_playerView);
-        Assert.IsNotNull(_playerModel);
-    }
+    public void Dispose() => DisposableExtension.Dispose(_disposable);
 
     private void SubscribesTrigger()
     {
-        _playerView._colliderReactCommand
-            .Subscribe(collider => CollisionTriggerLogik(collider))
+       _playerView.MyTrigger.OnTriggerEnterAsObservable()
+            .Where(t => t.gameObject.layer == LayerMask.NameToLayer(
+                _playerView.TriggerNamesLayer.FirstOrDefault(name => name == LayerMask.LayerToName(t.gameObject.layer))))
+            .Subscribe(other =>
+                colliderReactCommand.Execute(other)
+            ).AddTo(_disposable);
+
+        colliderReactCommand
+            .Subscribe(collider => TriggerLogik(collider))
             .AddTo(_disposable);
     }
 
-    private void CollisionTriggerLogik(Collider coll)
-    {
-        Debug.Log(coll.name);
-    }
     private void CalculateCameraDotVector()
     {
         Vector2 inputClamp =
@@ -94,5 +83,9 @@ public sealed class PlayerPresenter : IInitializable, ITickable, IDisposable, IP
         _playerView.DynamicFloatAnimate("InputMagnitude", _cameraDotinputVect.magnitude, 0.5f);
         _playerView.DynamicFloatAnimate("Horizontal", _cameraDotinputVect.x, 0.05f);
         _playerView.DynamicFloatAnimate("Vertical", _cameraDotinputVect.z, 0.05f);
+    }
+    private void TriggerLogik(Collider coll)
+    {
+        Debug.Log(coll.name);
     }
 }

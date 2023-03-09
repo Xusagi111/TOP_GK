@@ -9,6 +9,7 @@ namespace Building
         public static Inventory GetInventoryUser(GameObject CheckingInventory)
         {
             var PLayerInventory = CheckingInventory.GetComponent<TestPlayerInventory>();
+
             if (PLayerInventory == null) return null;
             else return PLayerInventory;
         }

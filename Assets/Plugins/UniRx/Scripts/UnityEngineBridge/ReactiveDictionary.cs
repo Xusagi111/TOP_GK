@@ -509,7 +509,6 @@ namespace UniRx
 
         #endregion
     }
-
     public static partial class ReactiveDictionaryExtensions
     {
         public static ReactiveDictionary<TKey, TValue> ToReactiveDictionary<TKey, TValue>(this Dictionary<TKey, TValue> dictionary)

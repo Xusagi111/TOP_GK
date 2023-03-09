@@ -6,6 +6,7 @@ namespace Building
 {
     public class ContactWithTheObject : MonoBehaviour
     {
+
         public UnityEvent<GameObject> EventToContact { get; set; } = new UnityEvent<GameObject>();
 
         private void OnTriggerEnter(Collider other)

@@ -1,21 +1,22 @@
-﻿using UnityEngine;
+﻿using Resource;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Building
 {
-    public abstract class  BaseWarehouse : MonoBehaviour
+    public abstract class BaseWarehouse : MonoBehaviour
     {
-        [field: SerializeField] public ResourceWarhouse AllResorce { get; protected set; }
-        public LogicContact LogicContact;
-        public Transform EndMovePositionResource;
-        private bool _isinit { get; set; } = false;
-
-        public void Init(Transform EndMovePositionResource, ResourceWarhouse NewListRes)
+        [SerializeField] private ResourceWarhouse[] _resourcesPlaces;
+        private Dictionary<EnumResource, ResourceWarhouse> resWarhouses = new Dictionary<EnumResource, ResourceWarhouse>();
+        public void GetInventory()
         {
-            if (_isinit == true) return;
-            _isinit = true;
-            AllResorce = NewListRes;
-            LogicContact = this.gameObject.AddComponent<LogicContact>();
-            this.EndMovePositionResource = EndMovePositionResource;
+
+        }
+        public void InitResWarhouses()
+        {
+            for(int i = 0; i< _resourcesPlaces.Length; i++)
+                resWarhouses.Add(_resourcesPlaces[i].EnumResource, _resourcesPlaces[i]);
         }
     }
 }
