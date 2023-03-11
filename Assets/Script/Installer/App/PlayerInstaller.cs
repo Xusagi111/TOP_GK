@@ -26,10 +26,6 @@ public class PlayerInstaller : ScriptableObjectInstaller<PlayerInstaller>
             FromInstance(playerView).AsSingle();
     }
 
-    public void BindPlayerPresenter()
-    {
-        Container.
-            Bind(typeof(ITickable), typeof(IInitializable), typeof(IDisposable),typeof(IPlayerPresenter)).
-            To<PlayerPresenter>().AsSingle();
-    }
+    public void BindPlayerPresenter() => 
+        Container.BindInterfacesAndSelfTo<PlayerPresenter>().AsSingle();
 }

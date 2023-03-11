@@ -1,3 +1,5 @@
+using Assets.Script.Resourse;
+using Resource;
 using UnityEngine;
 using Zenject;
 

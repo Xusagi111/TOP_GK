@@ -21,9 +21,14 @@ namespace Building
         private CompositeDisposable _dispose = new CompositeDisposable();
 
         #region Props
+        public List<BaseResource> AllResources => _resources;
         public EnumResource EnumResource => typeRes;
         public Collider Collider => myCollider;
         public int MaxElement => maxElement;
+
+        public bool isStack { get{
+                return curCount < maxElement;
+            }}
         #endregion
 
         public void Init()
@@ -34,13 +39,20 @@ namespace Building
             }).AddTo(_dispose);
         }
         public void AddResource(BaseResource resource) {
-            if(curCount < MaxElement)
+            if (curCount < MaxElement)
             {
                 _resources.Add(resource);
                 curCount++;
             }
         } 
-        public void RemoveResource(BaseResource resource) => _resources.Remove(resource);
+        public void RemoveResource(BaseResource resource)
+        {
+            _resources.Remove(resource);
+            curCount--;
+        }
+
+        public void RemoveResources(int countResource) => _resources.RemoveRange(0, countResource);
+
         public void SendResourcesTo(int countRes, Vector3 startPos, ResourceWarhouse endTransform) =>
             SendResourcesTask(countRes, startPos, endTransform).Forget();
 

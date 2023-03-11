@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UniRx;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 namespace Resource
 {
@@ -53,5 +54,7 @@ namespace Resource
         {
             DisposableExtension.Dispose(_disposable);
         }
+
+        public class Factory : PlaceholderFactory<EnumResource, Vector3, BaseResource> { }
     }
 }

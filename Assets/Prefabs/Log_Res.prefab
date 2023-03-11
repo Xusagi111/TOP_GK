@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 414572084046413204}
   - component: {fileID: 414572084046413205}
   - component: {fileID: 414572084046413206}
-  - component: {fileID: 414572084046413202}
+  - component: {fileID: 6434766121041873124}
   m_Layer: 0
   m_Name: Log_Res
   m_TagString: Untagged
@@ -99,7 +99,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &414572084046413202
+--- !u!114 &6434766121041873124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 414572084046413207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f78c21a936c329b41a300992893aaa3d, type: 3}
+  m_Script: {fileID: 11500000, guid: fcd1a1e0c5b26854c88249334095a21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
